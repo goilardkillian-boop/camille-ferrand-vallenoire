@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr" class="sans-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Une question ? · Camille Ferrand, Vallenoire (projet étudiant)</title>
+  <meta name="description" content="Posez une question, proposez une idée ou dites votre désaccord à l’équipe de Camille Ferrand. Chaque message est lu, réponse sous 48 heures. Projet étudiant.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#4169E1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Une question, une idée ? · Camille Ferrand, Vallenoire">
+  <meta property="og:description" content="Chaque message est lu par l’équipe. Réponse sous 48 heures. Projet étudiant.">
+  <meta property="og:image" content="images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="campagne.css">
+</head>
+<body class="page">
+  <div id="entete-commun"></div>
+  <noscript><p style="padding:120px 16px 0"><a href="index.html">Accueil</a> · <a href="programme.html">Programme</a> · <a href="engagement.html">Je m’engage</a> · <a href="presse.html">Presse</a></p></noscript>
+
+  <main id="contenu" tabindex="-1">
+    <section class="heros">
+      <div class="conteneur grille-heros">
+        <div class="texte">
+          <p class="surtitre apparait">Une question, une idée, un avis</p>
+          <h1 class="affiche apparait" data-delai="1">Écrivez à Camille. <span class="souligne">On vous répond.</span></h1>
+          <p class="chapo apparait" data-delai="2">Une question sur une mesure, une idée pour votre rue, un soutien ou un désaccord : tout est bienvenu. Écouter, c’est aussi entendre ce qui ne va pas.</p>
+          <p class="promesse apparait" data-delai="3"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 8v6l4 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Chaque message est lu par l’équipe. Réponse sous 48 heures.</p>
+        </div>
+        <figure class="heros-visuel paysage apparait" data-delai="2">
+          <img src="images/reunion.jpg" alt="Une salle communale prête pour une réunion de quartier, chaises alignées" width="1350" height="900">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section blanc" id="formulaire" aria-labelledby="titre-form" data-masque-cta>
+      <div class="conteneur grille-2" style="align-items:start">
+        <div class="entete-section">
+          <p class="surtitre">Votre message</p>
+          <h2 class="titre" id="titre-form">Trois minutes suffisent.</h2>
+          <p>Un outil trie les messages par thème pour qu’ils arrivent vite à la bonne personne. <strong>Un humain répond toujours</strong>, jamais un robot.</p>
+          <ol class="hypotheses" style="background:var(--beige)">
+            <li>Vous écrivez, en quelques lignes.</li>
+            <li>Votre message arrive chez le référent du thème.</li>
+            <li>Il vous répond par e-mail sous 48 heures.</li>
+          </ol>
+          <p><a href="donnees.html">Ce que nous faisons de vos données</a></p>
+        </div>
+
+        <form class="formulaire" data-kind="message" novalidate>
+          <fieldset>
+            <legend>C’est plutôt…</legend>
+            <div class="choix radio">
+              <label><input type="radio" name="type" value="question">Une question</label>
+              <label><input type="radio" name="type" value="idee">Une idée</label>
+              <label><input type="radio" name="type" value="soutien">Un soutien</label>
+              <label><input type="radio" name="type" value="desaccord">Un désaccord</label>
+            </div>
+            <p class="erreur" id="m-err-type" data-erreur="type" aria-live="polite"></p>
+          </fieldset>
+          <div class="champ">
+            <label for="m-theme">Thème <span class="facultatif">(facultatif)</span></label>
+            <select id="m-theme" name="theme">
+              <option value="">Je ne sais pas, ou plusieurs</option>
+              <option value="pouvoir_achat">Pouvoir d’achat</option>
+              <option value="tranquillite">Tranquillité</option>
+              <option value="mobilite">Mobilité du quotidien</option>
+              <option value="environnement">Environnement et méthode</option>
+              <option value="autre">Autre sujet</option>
+            </select>
+          </div>
+          <div class="champ">
+            <label for="m-contenu">Votre message</label>
+            <textarea id="m-contenu" name="contenu" rows="6" maxlength="3000" required></textarea>
+            <p class="erreur" id="m-err-contenu" data-erreur="contenu" aria-live="polite"></p>
+          </div>
+          <div class="grille-2" style="gap:22px">
+            <div class="champ">
+              <label for="m-prenom">Prénom</label>
+              <input type="text" id="m-prenom" name="prenom" autocomplete="given-name" required>
+              <p class="erreur" id="m-err-prenom" data-erreur="prenom" aria-live="polite"></p>
+            </div>
+            <div class="champ">
+              <label for="m-email">E-mail</label>
+              <input type="email" id="m-email" name="email" autocomplete="email" required>
+              <p class="erreur" id="m-err-email" data-erreur="email" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="piege" aria-hidden="true">
+            <label for="m-site">Ne pas remplir ce champ</label>
+            <input type="text" id="m-site" name="site_web" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="champ">
+            <label class="consent" for="m-consent">
+              <input type="checkbox" id="m-consent" name="consentement" value="oui" required>
+              <span>J’accepte que l’équipe de campagne de Camille Ferrand utilise mon prénom, mon e-mail et mon message pour me répondre. Mes données sont supprimées au plus tard un mois après l’élection, et je peux retirer mon accord à tout moment.</span>
+            </label>
+            <p class="erreur" id="m-err-consent" data-erreur="consentement" aria-live="polite"></p>
+          </div>
+          <div class="form-bas">
+            <button class="btn btn-bleu" type="submit">Envoyer mon message <span class="fleche" aria-hidden="true">→</span></button>
+          </div>
+          <p class="etat" data-etat role="status" aria-live="polite" tabindex="-1"></p>
+
+          <div class="succes" role="status" aria-live="polite">
+            <svg viewBox="0 0 96 96" aria-hidden="true"><circle class="cercle" cx="48" cy="48" r="45" fill="none" stroke="#4169E1" stroke-width="5"/><path class="coche" d="M29 50l13 13 26-28" fill="none" stroke="#4169E1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Message bien reçu, merci !</h3>
+            <p>Un membre de l’équipe vous répond sous 48 heures, à l’adresse indiquée.</p>
+            <a class="btn btn-contour" href="programme.html">Lire le programme</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="titre-autres">
+      <div class="conteneur">
+        <div class="entete-section">
+          <p class="surtitre">Se parler en vrai</p>
+          <h2 class="titre" id="titre-autres">Vous préférez de vive voix ?</h2>
+        </div>
+        <div class="grille-3">
+          <article class="carte pose">
+            <svg class="picto" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h32l-3-9H9z"/><path d="M9 18v18h26V18"/><path d="M17 36v-9h10v9"/></g></svg>
+            <h3>Au marché, le samedi</h3>
+            <p>Camille et l’équipe tiennent un stand sous les arcades, de 9 h à 12 h.</p>
+          </article>
+          <article class="carte pose" data-delai="1">
+            <svg class="picto" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 39s-12-11-12-20a12 12 0 0 1 24 0c0 9-12 20-12 20z"/><circle cx="22" cy="19" r="4"/></g></svg>
+            <h3>En permanence de quartier</h3>
+            <p>Une permanence par mois dans chacun des 6 quartiers. Les dates sont dans l’agenda.</p>
+            <a href="engagement.html#agenda">Voir l’agenda</a>
+          </article>
+          <article class="carte pose" data-delai="2">
+            <svg class="picto" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="34" height="24" rx="3"/><path d="M6 12l16 12 16-12"/></g></svg>
+            <h3>Par e-mail</h3>
+            <p>Directement à l’équipe : <a data-config="emailEquipe" href="question.html#formulaire">adresse bientôt disponible</a>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="pied-commun"></div>
+  <script src="config.js"></script>
+  <script src="campagne.js" defer></script>
+</body>
+</html>

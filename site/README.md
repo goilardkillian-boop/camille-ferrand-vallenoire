@@ -1,0 +1,90 @@
+# Camille Ferrand · Site de campagne (Vallenoire)
+
+**Projet étudiant : la candidate et la ville sont fictives.**
+
+Site 100 % statique (HTML, CSS, JavaScript, aucune étape de build), hébergé sur **GitHub Pages**. Les formulaires partent vers **Make** : voir [`MAKE-SETUP.md`](MAKE-SETUP.md).
+
+## Les pages
+
+| Fichier | Contenu |
+| --- | --- |
+| `index.html` | Le récit de campagne, animé (modèle « Site Immersif ») |
+| `programme.html` | 24 mesures filtrables, simulateur « Ce que je gagne », carte des quartiers, chiffres clés sourcés, méthode |
+| `engagement.html` | Jauge des bénévoles, missions, formulaire bénévole, agenda, « Je vote » |
+| `question.html` | Question, idée, soutien ou désaccord : formulaire vers l'équipe |
+| `presse.html` | Biographies, kit visuel, communiqués, contact presse |
+| `mentions-legales.html`, `donnees.html`, `404.html` | Pages légales et page d'erreur |
+
+## Ce que l'on modifie, et où
+
+| Je veux changer… | Fichier |
+| --- | --- |
+| E-mails, webhook Make, compteur, date du scrutin, agenda, réseaux, hypothèses du simulateur, communiqués | **`config.js`** (tout est commenté) |
+| Les textes de la page d'accueil | `content.js`, moitié haute uniquement |
+| Les 24 mesures, les quartiers | `programme.html` |
+| Une image | Déposer le nouveau fichier dans `images/` **sous le même nom** (voir `images/CREDITS.md`) |
+
+Ne jamais modifier `app.js` ni la partie « INJECTION » de `content.js` : c'est le moteur des animations.
+
+## À remplir avant la mise en ligne
+
+Cherchez les crochets `[` dans le dossier :
+
+- `config.js` : `[EMAIL_EQUIPE]`, `[EMAIL_PRESSE]`, `[TELEPHONE_PRESSE]` (facultatif), `[URL_SITE]`, `[URL_WEBHOOK_MAKE]`, `[URL_CSV_ONGLET_COMPTEUR]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` ;
+- `content.js` : `[EMAIL_EQUIPE]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` (mêmes valeurs que `config.js`) ;
+- `mentions-legales.html` : éditeur, directeur de la publication, école, crédit du portrait ;
+- `donnees.html` : responsable du traitement ;
+- `presse.html` : passages surlignés « à compléter » des biographies.
+
+Pour les images de partage (Facebook, WhatsApp), les balises `og:image` doivent contenir une adresse **complète** : une fois l'adresse du site connue, remplacez `images/og-image.jpg` par `https://<compte>.github.io/<depot>/images/og-image.jpg` dans les pages HTML.
+
+## Mise en ligne sur GitHub Pages, pas à pas
+
+Le site est dans le dossier `site/`. Deux façons de le publier :
+
+### Option A (recommandée) : le dépôt tel quel, avec GitHub Actions
+
+Le fichier `.github/workflows/pages.yml` (à la racine du dépôt) publie automatiquement le dossier `site/` à chaque envoi sur `main`.
+
+1. Dépôt GitHub **public** (GitHub Pages gratuit l'exige).
+2. Settings → Pages → *Build and deployment* → Source : **GitHub Actions**.
+3. Envoyez vos modifications sur `main`, puis suivez l'onglet *Actions* : l'adresse publiée s'affiche à la fin.
+
+### Option B : la méthode classique « Deploy from a branch »
+
+1. Dépôt public dont la racine contient **le contenu de `site/`** (ou renommez `site/` en `docs/`).
+2. Le fichier `.nojekyll` doit être à la racine publiée (il y est déjà).
+3. Settings → Pages → *Deploy from a branch* → `main` → `/ (root)` (ou `/docs`).
+
+### Dans les deux cas
+
+- Tous les chemins sont relatifs : le site fonctionne sous `https://<compte>.github.io/<depot>/`.
+- Limite connue : la page `404.html` est servie à n'importe quelle adresse inconnue ; si cette adresse est dans un sous-dossier, ses liens relatifs peuvent ne pas fonctionner.
+- Testez l'adresse publiée : les deux formulaires, la jauge, l'affichage sur téléphone, le mode « animations réduites » (réglage d'accessibilité du téléphone ou de l'ordinateur) et le bouton A+.
+
+## Tester en local
+
+```bash
+node ../.claude/serve-site.mjs          # http://localhost:4385
+```
+
+Faux webhook pour voir exactement ce que le site envoie :
+
+```bash
+node -e "require('http').createServer((q,r)=>{let b='';q.on('data',c=>b+=c);q.on('end',()=>{console.log(q.method,decodeURIComponent(b.replace(/\+/g,' ')).split('&').join('\n'));r.writeHead(200,{'Access-Control-Allow-Origin':'*'});r.end('ok')})}).listen(4390)"
+```
+
+puis, le temps du test, `makeWebhook: 'http://localhost:4390'` dans `config.js`.
+
+## Règles à respecter pendant la campagne
+
+- **Article L49 du Code électoral** : à partir de la **veille du scrutin à 0 h**, plus aucune mise à jour du site (ni texte, ni agenda, ni publication). Avec la date actuelle de `config.js` (13 décembre 2026) : plus aucune modification à partir du **samedi 12 décembre 2026 à 0 h**.
+- **Article L52-1** : aucune publicité payante pour le site, aucun pixel publicitaire, aucun outil de suivi. Pas de Google Analytics. Si une mesure d'audience est nécessaire, choisir une solution sans cookie.
+- Pas de blason, de logo ni de charte de la mairie, jamais la mention « site officiel ».
+- `noindex` sur toutes les pages : le site ne doit pas apparaître dans les moteurs de recherche.
+- Données : consentement explicite, aucune donnée personnelle dans un fichier public, suppression au plus tard un mois après l'élection (voir `MAKE-SETUP.md`, section 5).
+- Écriture : aucun tiret cadratin ni demi-cadratin dans les textes ; utiliser « · », « : » ou une virgule.
+
+## Charte
+
+Bleu roi `#4169E1` (texte bleu sur fond clair : `#3457C9`), anthracite `#192026`, beige `#EEE5D7`, blanc, corail `#E74D3D` en ponctuation uniquement (chiffres clés, jamais de texte courant, jamais en aplat à côté du bleu). Typographie Archivo. Texte courant 18 px minimum, cibles tactiles de 44 px minimum.
