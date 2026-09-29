@@ -399,6 +399,10 @@
       $$(`[name="${nom}"]`, form).forEach((c) => {
         const ev = (c.type === 'checkbox' || c.type === 'radio' || c.tagName === 'SELECT') ? 'change' : 'blur';
         c.addEventListener(ev, () => { if (c.getAttribute('aria-invalid') === 'true' || ev === 'change') erreur(nom, REGLES[nom]()); });
+        /* Champ texte en erreur : le message s'efface dès que la saisie est
+           correcte, et non au moment de quitter le champ (sinon la page
+           remonte sous le pointeur pendant le clic suivant). */
+        if (ev === 'blur') c.addEventListener('input', () => { if (c.getAttribute('aria-invalid') === 'true' && !REGLES[nom]()) erreur(nom, ''); });
       });
     });
 

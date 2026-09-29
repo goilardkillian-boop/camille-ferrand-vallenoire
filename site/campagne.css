@@ -49,9 +49,13 @@ body.page {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-wrap: break-word;
 }
-html.a-plus { font-size: 125%; }
-html.a-plus body.page { font-size: 22.5px; }
+body.page h1, body.page h2, body.page h3, body.page h4 { hyphens: auto; -webkit-hyphens: auto; }
+body.page .mesure-bouton > span { min-width: 0; }
+/* Bouton A+ : le contenu et le pied sont agrandis à 125 % et se remettent
+   en page. L'en-tête fixe garde sa taille pour rester utilisable. */
+html.a-plus body.page main, html.a-plus body.page .pied { zoom: 1.25; }
 body.page *, body.page *::before, body.page *::after { box-sizing: border-box; }
 body.page img { max-width: 100%; height: auto; display: block; }
 body.page h1, body.page h2, body.page h3, body.page h4, body.page p, body.page ul, body.page ol, body.page figure, body.page blockquote, body.page dl, body.page dd { margin: 0; }
@@ -424,7 +428,7 @@ body.page .fiche-quartier dt { font-weight: 700; margin-top: 8px; }
 body.page .etiquettes { display: flex; flex-wrap: wrap; gap: 8px; }
 body.page .etiquettes a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 999px; background: #EEF2FC; color: var(--bleu-fonce); font-weight: 700; font-size: 16px; text-decoration: none; }
 body.page .etiquettes a:hover { background: var(--bleu); color: #fff; }
-body.page .liste-quartiers { margin-top: 20px; }
+body.page .liste-quartiers { margin-top: 20px; overflow-x: auto; }
 body.page .liste-quartiers summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
 body.page .liste-quartiers table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: 10px; }
 body.page .liste-quartiers th, body.page .liste-quartiers td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--filet); vertical-align: top; }
@@ -470,7 +474,8 @@ body.page .texte-long h3 { font-weight: 700; font-size: 21px; margin-top: 8px; }
 body.page .texte-long ul { display: grid; gap: 8px; }
 body.page .texte-long ul li { padding-left: 20px; position: relative; }
 body.page .texte-long ul li::before { content: ''; position: absolute; left: 0; top: .62em; width: 8px; height: 2px; background: var(--bleu); }
-body.page .placeholder { font-family: ui-monospace, Menlo, monospace; font-size: .92em; background: #FFF3C4; padding: 0 4px; border-radius: 4px; }
+body.page .placeholder { font-family: ui-monospace, Menlo, monospace; font-size: .92em; background: #FFF3C4; padding: 0 4px; border-radius: 4px; overflow-wrap: anywhere; }
+body.page .texte-long > *, body.page .rdv > div, body.page .grille-2 > *, body.page .grille-3 > * { min-width: 0; }
 
 /* ─── Pied de page commun ─── */
 body.page .pied { background: var(--anthracite); color: #fff; padding: clamp(56px, 8vw, 96px) 0 calc(28px + env(safe-area-inset-bottom)); }
@@ -520,11 +525,20 @@ body.page .pied .discret { color: rgba(255, 255, 255, .72); }
   body.page .rdv { grid-template-columns: 72px 1fr; gap: 14px; padding: 16px; }
   body.page .rdv .jour { font-size: 36px; }
   body.page .rdv time { padding-right: 12px; }
-  body.page .rdv .quartier { grid-column: 2; justify-self: start; }
+  body.page .rdv .quartier { grid-column: 2; justify-self: start; white-space: normal; }
+  body.page .agenda > li { min-width: 0; }
   body.page .mesure-detail { padding-left: 20px; }
   body.page .pied-haut { grid-template-columns: 1fr; }
   body.page .pastille { left: 12px; }
   body.page .filtres .groupe > span { width: 100%; }
+}
+@media (max-width: 400px) {
+  body.page .entete-in { gap: 10px; }
+  body.page .entete .marque svg { display: none; }
+  body.page .marque { font-size: 19px; }
+  body.page .outils { gap: 6px; }
+  body.page .btn-aplus { min-width: 44px; }
+  body.page .btn-menu { padding: 0 12px; }
 }
 @media (max-width: 380px) {
   body.page .bandeau .compte { display: none; }
@@ -543,3 +557,6 @@ body.page .pied .discret { color: rgba(255, 255, 255, .72); }
 body.page .pilier-image { margin: 0 0 14px; }
 body.page .pilier-image img { width: 100%; height: clamp(160px, 22vw, 260px); object-fit: cover; border-radius: var(--rayon); }
 @media (prefers-reduced-motion: reduce) { body.page .pilier-image { opacity: 1; transform: none; } }
+
+/* liens isolés dans une carte : cible tactile de 44 px */
+body.page .carte > a:not(.btn) { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
