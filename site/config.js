@@ -16,7 +16,7 @@ window.CAMPAGNE = {
 
   /* Adresse publique du site, SANS barre finale, par exemple
      https://moncompte.github.io/camille-ferrand. Sert aux liens de partage. */
-  urlSite: '[URL_SITE]',
+  urlSite: 'https://goilardkillian-boop.github.io/camille-ferrand-vallenoire',
 
   /* ─── Make (voir MAKE-SETUP.md) ─── */
   makeWebhook: '[URL_WEBHOOK_MAKE]',          // un seul webhook, le champ "kind" route les envois

@@ -2,41 +2,51 @@
 
 **Projet étudiant : la candidate et la ville sont fictives.**
 
-Site 100 % statique (HTML, CSS, JavaScript, aucune étape de build), hébergé sur **GitHub Pages**. Les formulaires partent vers **Make** : voir [`MAKE-SETUP.md`](MAKE-SETUP.md).
+Site 100 % statique (HTML, CSS, JavaScript, aucune étape de build au déploiement), hébergé sur **GitHub Pages**. Les formulaires partent vers **Make** : voir [`MAKE-SETUP.md`](MAKE-SETUP.md).
 
 ## Les pages
 
+Le site est conçu d'abord pour l'accessibilité (objectif WCAG 2.2 AA et RGAA 4.1) : il se lit au clavier, avec un lecteur d'écran, à 400 % de zoom et sans JavaScript. Le système de design est décrit dans [`DESIGN.md`](../DESIGN.md), à la racine du dépôt.
+
 | Fichier | Contenu |
 | --- | --- |
-| `index.html` | Le récit de campagne, animé (modèle « Site Immersif ») |
-| `programme.html` | 24 mesures filtrables, simulateur « Ce que je gagne », carte des quartiers, chiffres clés sourcés, méthode |
-| `engagement.html` | Jauge des bénévoles, missions, formulaire bénévole, agenda, « Je vote » |
-| `question.html` | Question, idée, soutien ou désaccord : formulaire vers l'équipe |
+| `index.html` | Accueil accessible : promesse, 4 piliers, devise, 3 façons d'agir, parole de Camille, agenda |
+| `programme.html` | 24 mesures en accordéons, filtres par thème et par profil (gardés dans l'adresse), simulateur « Ce que je gagne », plan et tableau des quartiers, chiffres sourcés, méthode, impression |
+| `facile-a-lire.html` | Le programme en facile à lire et à comprendre |
+| `engagement.html` | Jauge des bénévoles, missions, formulaire bénévole, agenda |
+| `je-vote.html` | Inscription, procuration, date du scrutin, questions fréquentes sur le vote |
+| `question.html` | Formulaire question, idée, soutien ou désaccord, et questions fréquentes |
 | `presse.html` | Biographies, kit visuel, communiqués, contact presse |
-| `mentions-legales.html`, `donnees.html`, `404.html` | Pages légales et page d'erreur |
+| `accessibilite.html` | Réglages d'affichage, état de l'accessibilité, signaler un problème |
+| `plan-du-site.html`, `mentions-legales.html`, `donnees.html`, `404.html` | Plan du site, pages légales, page d'erreur |
+| `experience.html` | Version animée (modèle « Site Immersif »), proposée en option, peu accessible |
+
+Sur chaque page : bouton **Affichage** (taille du texte, contraste renforcé, espacement, police très lisible, animations coupées), bouton **Écouter cette page**, fil d'Ariane, lien « Aller au contenu ».
 
 ## Ce que l'on modifie, et où
 
 | Je veux changer… | Fichier |
 | --- | --- |
 | E-mails, webhook Make, compteur, date du scrutin, agenda, réseaux, hypothèses du simulateur, communiqués | **`config.js`** (tout est commenté) |
-| Les textes de la page d'accueil | `content.js`, moitié haute uniquement |
-| Les 24 mesures, les quartiers | `programme.html` |
+| Le texte d'une page, le menu, le pied de page | `outils/gabarits/<page>.html` et `outils/construire.py`, puis lancer `python3 outils/construire.py` depuis la racine du dépôt |
+| Les 24 mesures | `outils/mesures.py`, puis relancer `python3 outils/construire.py` |
+| Les textes de la version animée | `content.js`, moitié haute uniquement |
+| Les couleurs, tailles, espacements | `campagne.css` (jetons en haut du fichier, voir `DESIGN.md`) |
 | Une image | Déposer le nouveau fichier dans `images/` **sous le même nom** (voir `images/CREDITS.md`) |
 
-Ne jamais modifier `app.js` ni la partie « INJECTION » de `content.js` : c'est le moteur des animations.
+Attention : les pages HTML de `site/` sont **produites** par `outils/construire.py`. Une modification faite directement dans `site/programme.html` sera écrasée à la prochaine construction : modifiez le gabarit. Ne jamais modifier `app.js` ni la partie « INJECTION » de `content.js` (moteur de la version animée).
 
 ## À remplir avant la mise en ligne
 
-Cherchez les crochets `[` dans le dossier :
+Cherchez les crochets `[` :
 
-- `config.js` : `[EMAIL_EQUIPE]`, `[EMAIL_PRESSE]`, `[TELEPHONE_PRESSE]` (facultatif), `[URL_SITE]`, `[URL_WEBHOOK_MAKE]`, `[URL_CSV_ONGLET_COMPTEUR]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` ;
-- `content.js` : `[EMAIL_EQUIPE]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` (mêmes valeurs que `config.js`) ;
-- `mentions-legales.html` : éditeur, directeur de la publication, école, crédit du portrait ;
-- `donnees.html` : responsable du traitement ;
-- `presse.html` : passages surlignés « à compléter » des biographies.
+- `config.js` : `[EMAIL_EQUIPE]`, `[EMAIL_PRESSE]`, `[TELEPHONE_PRESSE]` (facultatif), `[URL_WEBHOOK_MAKE]`, `[URL_CSV_ONGLET_COMPTEUR]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` ;
+- `content.js` et `experience.html` : `[EMAIL_EQUIPE]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` (mêmes valeurs) ;
+- `outils/gabarits/mentions-legales.html` : éditeur, directeur de la publication, école, crédit du portrait ;
+- `outils/gabarits/donnees.html` : responsable du traitement ;
+- `outils/gabarits/presse.html` : passages surlignés « à compléter » des biographies.
 
-Pour les images de partage (Facebook, WhatsApp), les balises `og:image` doivent contenir une adresse **complète** : une fois l'adresse du site connue, remplacez `images/og-image.jpg` par `https://<compte>.github.io/<depot>/images/og-image.jpg` dans les pages HTML.
+L'adresse du site (`https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/`) est déjà renseignée dans `config.js` et dans `outils/construire.py` (balises de partage, adresse canonique, `sitemap.xml`). Si le site change d'adresse, modifiez ces deux endroits.
 
 ## Mise en ligne sur GitHub Pages, pas à pas
 
