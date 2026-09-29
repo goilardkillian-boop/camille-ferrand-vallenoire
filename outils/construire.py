@@ -7,6 +7,7 @@ reste 100 % statique et n'a besoin d'aucune étape de build.
 
 Usage : python3 outils/construire.py
 """
+import hashlib
 import html
 import json
 import re
@@ -298,6 +299,19 @@ def typographie(texte):
     return ''.join(morceaux)
 
 
+def version(nom):
+    """Empreinte courte du fichier : change dès que le fichier change, ce qui
+    oblige les navigateurs à recharger la nouvelle version (pas de mélange
+    entre une ancienne feuille de style en cache et une nouvelle page)."""
+    return hashlib.sha1((SITE / nom).read_bytes()).hexdigest()[:10]
+
+
+def versionner(page):
+    for nom in ('campagne.css', 'campagne.js', 'config.js', 'styles.css', 'app.js', 'content.js'):
+        page = re.sub(r'(["\'])' + re.escape(nom) + r'(\?v=\w+)?\1', lambda m: f'{m.group(1)}{nom}?v={version(nom)}{m.group(1)}', page)
+    return page
+
+
 def main():
     for fichier, court, titre, description, parent in PAGES:
         corps = (GABARITS / fichier).read_text(encoding='utf-8')
@@ -305,9 +319,13 @@ def main():
         page = (tete(fichier, court, titre, description, parent) + entete(fichier)
                 + '\n  <main id="contenu" tabindex="-1">\n' + ariane(fichier, court, parent)
                 + corps + '  </main>\n' + pied(fichier))
-        page = typographie(page)
+        page = versionner(typographie(page))
         (SITE / fichier).write_text(page, encoding='utf-8')
         print('écrit', fichier)
+    # La version animée n'est pas générée : on met seulement à jour ses numéros de version
+    exp = SITE / 'experience.html'
+    exp.write_text(versionner(exp.read_text(encoding='utf-8')), encoding='utf-8')
+    print('versions mises à jour dans experience.html')
     # Plan du site pour les moteurs (inutile tant que le site est en noindex, prêt pour plus tard)
     urls = ''.join(f'  <url><loc>{URL_SITE}{"" if f == "index.html" else f}</loc></url>\n' for f, *_ in PAGES if f != '404.html')
     (SITE / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n', encoding='utf-8')

@@ -663,3 +663,11 @@ body.page .chiffre .valeur { font-size: min(clamp(2.5rem, 4.6vw, 3.75rem), 12vw)
   html.texte-tres-grand body.page .btn-menu { display: inline-flex; }
   html.texte-tres-grand body.page .outils { margin-left: auto; }
 }
+
+/* Pages à texte seul : la colonne reste alignée à gauche sur le logo et le fil d'Ariane */
+body.page .heros-seul .conteneur.texte-heros { max-width: var(--largeur); }
+body.page .heros-seul .texte-heros > * { max-width: 52rem; }
+body.page .conteneur.texte-long { max-width: var(--largeur); }
+body.page .conteneur.texte-long > * { max-width: 68ch; }
+body.page .texte-long > h2:first-child { margin-top: 0; }
+body.page .fictif, body.page .texte-heros > .ecouter { justify-self: start; }
