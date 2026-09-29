@@ -36,6 +36,8 @@ Durée totale : environ 1 h 30 la première fois. Tout est gratuit.
 
 ### B2. Régler le type de chaque colonne
 
+À l'import, Airtable devine les types et se trompe souvent. Vérifiez chaque colonne : **seule `Horodatage` (et `Réponse envoyée le`) doit être de type Date**. Une colonne `Version consentement` en Date provoque l'erreur Make « Invalid date in parameter ».
+
 Clic sur la petite flèche à droite du nom de colonne → **Edit field** → choisissez le type.
 
 **Table `Benevoles`**
