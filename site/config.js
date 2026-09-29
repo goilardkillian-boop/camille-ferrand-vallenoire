@@ -10,8 +10,10 @@
 window.CAMPAGNE = {
 
   /* ─── Contacts ─── */
-  emailEquipe: '[EMAIL_EQUIPE]',        // reçoit les messages et le repli des formulaires
-  emailPresse: '[EMAIL_PRESSE]',        // contact affiché sur presse.html
+  /* Alias Gmail : tout ce qui est envoyé à ces adresses arrive dans la boîte
+     goilard.killian@gmail.com. Le « +vallenoire » permet de trier avec un filtre. */
+  emailEquipe: 'goilard.killian+vallenoire@gmail.com',   // reçoit les messages et le repli des formulaires
+  emailPresse: 'goilard.killian+presse@gmail.com',      // contact affiché sur presse.html
   telPresse: '[TELEPHONE_PRESSE]',      // facultatif : laisser tel quel pour le masquer
 
   /* Adresse publique du site, SANS barre finale, par exemple
@@ -19,9 +21,11 @@ window.CAMPAGNE = {
   urlSite: 'https://goilardkillian-boop.github.io/camille-ferrand-vallenoire',
 
   /* ─── Make (voir MAKE-SETUP.md) ─── */
-  makeWebhook: '[URL_WEBHOOK_MAKE]',          // un seul webhook, le champ "kind" route les envois
-  compteurCsv: '[URL_CSV_ONGLET_COMPTEUR]',   // onglet "Compteur" publié en CSV (aucune donnée personnelle)
-  benevolesRepli: 12,                         // affiché si le CSV ne répond pas
+  makeWebhook: '[URL_WEBHOOK_MAKE]',          // scénario 1 : un seul webhook, le champ "kind" route les envois
+  /* Scénario 2 : adresse qui renvoie le nombre de bénévoles (texte ou JSON,
+     par exemple {"benevoles": 17}). Aucune donnée personnelle. */
+  compteurUrl: '[URL_WEBHOOK_COMPTEUR]',
+  benevolesRepli: 12,                         // affiché si le compteur ne répond pas
   objectifBenevoles: 30,
 
   /* Version du texte de consentement envoyée avec chaque formulaire :
@@ -37,8 +41,9 @@ window.CAMPAGNE = {
 
   /* ─── Réseaux ─── */
   reseaux: {
-    facebook: '[URL_FACEBOOK]',
-    instagram: '[URL_INSTAGRAM]'
+    /* Comptes à créer avec exactement ces noms (ou remplacer par les vrais liens) */
+    facebook: 'https://www.facebook.com/camilleferrand.vallenoire',
+    instagram: 'https://www.instagram.com/camille.ferrand.vallenoire'
   },
 
   /* ─── Agenda ───
