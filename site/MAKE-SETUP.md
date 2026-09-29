@@ -46,8 +46,8 @@ Content-Type: application/x-www-form-urlencoded;charset=UTF-8
 | `contact` | Un e-mail **ou** un numéro de téléphone français |
 | `contact_type` | `email` ou `telephone` (calculé par le site : inutile de tester la présence de « @ ») |
 | `quartier` | `Centre bastide` · `Les Quais` · `Les Coteaux` · `Le Pradet` · `Gare Saint-Jean` · `Hameaux viticoles` |
-| `disponibilites` | Un ou plusieurs parmi `semaine`, `soir`, `week-end`, joints par des virgules |
-| `missions` | Un ou plusieurs parmi `porte-a-porte`, `marche`, `distribution`, `numerique`, `reunions`, joints par des virgules |
+| `disponibilites` | **Facultatif.** Zéro, un ou plusieurs parmi `semaine`, `soir`, `week-end`, joints par des virgules (vide si rien n'est coché) |
+| `missions` | **Facultatif.** Zéro, un ou plusieurs parmi `porte-a-porte`, `marche`, `distribution`, `numerique`, `reunions`, joints par des virgules (vide : le référent propose une mission) |
 
 Exemple de corps reçu :
 

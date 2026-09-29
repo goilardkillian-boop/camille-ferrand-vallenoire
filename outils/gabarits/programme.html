@@ -1,0 +1,204 @@
+    <section class="heros" aria-labelledby="titre-page">
+      <div class="conteneur heros-grille">
+        <div class="texte-heros">
+          <p class="surtitre">Le programme</p>
+          <h1 class="affiche" id="titre-page">Vivre mieux à Vallenoire, sans dépenser plus.</h1>
+          <p class="chapo">Des factures allégées, une ville plus apaisée, des trajets plus simples. Chaque mesure dit pour qui, avec quel levier de la mairie et pour quand : vous pourrez tout vérifier.</p>
+          <ul class="chiffres" role="list">
+            <li class="chiffre"><span class="valeur">24</span><span>mesures concrètes et datées</span></li>
+            <li class="chiffre"><span class="valeur">6</span><span>quartiers, une permanence par mois dans chacun</span></li>
+            <li class="chiffre"><span class="valeur">0 %</span><span>de hausse du taux communal de taxe foncière</span></li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-bleu" href="#mesures">Voir les 24 mesures</a>
+            <a class="btn btn-contour" href="facile-a-lire.html">Version facile à lire</a>
+            <button class="btn btn-contour" type="button" data-imprimer hidden>Imprimer le programme</button>
+          </div>
+          {{ECOUTER}}
+        </div>
+        <figure class="heros-visuel">
+          <img src="images/camille-ferrand.jpg" alt="Portrait de Camille Ferrand, souriante, en chemise bleu clair" width="750" height="1124" fetchpriority="high" decoding="async">
+          <figcaption><span translate="no">Camille Ferrand</span>, candidate à Vallenoire</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section fond-blanc" id="mesures" aria-labelledby="titre-mesures">
+      <div class="conteneur">
+        <div class="entete-section">
+          <p class="surtitre">Les 24 mesures</p>
+          <h2 class="titre" id="titre-mesures">Trouvez ce qui change pour vous</h2>
+          <p class="chapo">Choisissez un thème ou votre situation : les mesures qui vous concernent sont mises en avant. Ouvrez une mesure pour voir le détail.</p>
+        </div>
+
+        <div class="filtres" data-filtres hidden>
+          <fieldset>
+            <legend class="sous-titre">Thème</legend>
+            <div class="choix">
+              <button class="btn-outil" type="button" data-filtre="theme" data-valeur="tous" aria-pressed="true">Tous les thèmes</button>
+              <button class="btn-outil" type="button" data-filtre="theme" data-valeur="pouvoir-achat" aria-pressed="false">Pouvoir d’achat</button>
+              <button class="btn-outil" type="button" data-filtre="theme" data-valeur="tranquillite" aria-pressed="false">Tranquillité</button>
+              <button class="btn-outil" type="button" data-filtre="theme" data-valeur="mobilite" aria-pressed="false">Mobilité</button>
+              <button class="btn-outil" type="button" data-filtre="theme" data-valeur="environnement" aria-pressed="false">Environnement et méthode</button>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="sous-titre">Je suis</legend>
+            <div class="choix">
+              <button class="btn-outil" type="button" data-filtre="profil" data-valeur="tous" aria-pressed="true">Tout le monde</button>
+              <button class="btn-outil" type="button" data-filtre="profil" data-valeur="parent" aria-pressed="false">Parent</button>
+              <button class="btn-outil" type="button" data-filtre="profil" data-valeur="senior" aria-pressed="false">Senior</button>
+              <button class="btn-outil" type="button" data-filtre="profil" data-valeur="jeune" aria-pressed="false">Jeune</button>
+              <button class="btn-outil" type="button" data-filtre="profil" data-valeur="commercant" aria-pressed="false">Commerçant</button>
+              <button class="btn-outil" type="button" data-filtre="profil" data-valeur="proprietaire" aria-pressed="false">Propriétaire</button>
+            </div>
+          </fieldset>
+          <p class="resultat-filtre" data-filtre-resultat role="status">Les 24 mesures sont affichées.</p>
+          <p><button class="btn btn-contour btn-petit" type="button" data-tout-ouvrir aria-pressed="false" hidden>Ouvrir toutes les mesures</button></p>
+        </div>
+
+{{MESURES}}
+      </div>
+    </section>
+
+    <section class="section" id="simulateur" aria-labelledby="titre-sim">
+      <div class="conteneur">
+        <div class="entete-section">
+          <p class="surtitre">Simulateur</p>
+          <h2 class="titre" id="titre-sim">Ce que je gagne</h2>
+          <p class="chapo">4 informations suffisent pour estimer ce que 3 mesures peuvent faire économiser à votre foyer chaque année.</p>
+        </div>
+
+        <div class="simulateur" data-zone-simulateur>
+          <form class="formulaire" data-simulateur hidden aria-labelledby="titre-sim">
+            <div class="champ">
+              <label for="sim-enfants">Nombre d’enfants qui mangent à la cantine</label>
+              <div class="compteur-champ">
+                <button type="button" data-enfant="-1" aria-label="Un enfant de moins" aria-controls="sim-enfants">−</button>
+                <input type="number" id="sim-enfants" name="enfants" value="1" min="0" max="8" inputmode="numeric" style="width:5.5rem;text-align:center">
+                <button type="button" data-enfant="1" aria-label="Un enfant de plus" aria-controls="sim-enfants">+</button>
+              </div>
+            </div>
+            <div class="champ">
+              <label for="sim-tranche">Votre quotient familial</label>
+              <p class="aide" id="aide-tranche">Il figure sur votre attestation de la CAF.</p>
+              <select id="sim-tranche" name="tranche" aria-describedby="aide-tranche"></select>
+            </div>
+            <div class="champ">
+              <label for="sim-fonciere">Montant annuel de votre taxe foncière <span class="facultatif">(si vous êtes propriétaire)</span></label>
+              <div class="euro"><input type="text" id="sim-fonciere" name="fonciere" inputmode="decimal" autocomplete="off" placeholder="Par exemple 1 200…"></div>
+            </div>
+            <div class="champ">
+              <label for="sim-elec">Facture d’électricité par mois</label>
+              <div class="euro"><input type="text" id="sim-elec" name="electricite" inputmode="decimal" autocomplete="off" placeholder="Par exemple 90…"></div>
+            </div>
+            <button class="btn btn-bleu" type="submit">Calculer mon estimation</button>
+          </form>
+
+          <div class="sim-resultat" role="status" aria-live="polite" aria-atomic="true">
+            <p class="sous-titre">Jusqu’à</p>
+            <p class="montant" data-montant tabindex="-1">… €</p>
+            <p>par an pour votre foyer</p>
+            <dl>
+              <dt>Cantine au quotient</dt><dd data-part="cantine">… €</dd>
+              <dt>Taux communal gelé</dt><dd data-part="fonciere">… €</dd>
+              <dt>Achat groupé d’énergie</dt><dd data-part="energie">… €</dd>
+            </dl>
+            <p><strong>Estimation indicative, hypothèses de travail.</strong> Ce n’est pas une promesse de montant. <a href="#methode-simulateur">Voir la méthode</a></p>
+          </div>
+        </div>
+
+        <div class="encadre" id="methode-simulateur" style="margin-top:2rem">
+          <h3 class="sous-titre">Méthode et hypothèses de travail</h3>
+          <ul class="hypotheses">
+            <li>Cantine : <span data-hyp="repas">140</span> repas par enfant et par an, au prix actuel de <span data-hyp="prix">4,20 €</span>. Tarifs proposés selon le quotient : <span data-hyp="tarifs">1,00 € · 2,50 € · 3,50 € · 4,20 €</span>.</li>
+            <li>Taxe foncière : hausse du taux communal évitée de <span data-hyp="taux">2 %</span> par an, sur une part communale estimée à <span data-hyp="part">50 %</span> de votre avis. La revalorisation des bases, décidée chaque année par l’État, ne dépend pas de la commune et n’est pas comptée.</li>
+            <li>Énergie : économie de <span data-hyp="energie">10 %</span> sur la facture d’électricité grâce à l’achat groupé.</li>
+            <li>Résultat arrondi à la dizaine d’euros. Ces hypothèses sont publiques et modifiables.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fond-blanc" id="quartiers" aria-labelledby="titre-quartiers">
+      <div class="conteneur">
+        <div class="entete-section">
+          <p class="surtitre">Quartier par quartier</p>
+          <h2 class="titre" id="titre-quartiers">Six quartiers, des priorités différentes</h2>
+          <p class="chapo">Choisissez un quartier sur le plan pour voir qui y vit, ce qui compte pour ses habitants et les mesures prioritaires. Le même contenu est dans le tableau en dessous.</p>
+        </div>
+        <div class="quartiers">
+          <svg class="plan-quartiers" viewBox="0 0 600 450" data-plan-quartiers hidden role="group" aria-label="Plan schématique des six quartiers de Vallenoire : choisissez un quartier">
+            <g class="zone" data-zone="hameaux" role="button" tabindex="0" aria-pressed="false" aria-label="Hameaux viticoles"><path class="forme" d="M34 24 H566 Q576 24 576 34 V92 Q440 118 300 96 Q160 76 24 108 V34 Q24 24 34 24 Z"/><text x="300" y="66" text-anchor="middle">Hameaux viticoles</text></g>
+            <g class="zone" data-zone="coteaux" role="button" tabindex="0" aria-pressed="false" aria-label="Les Coteaux"><path class="forme" d="M24 120 Q160 88 300 108 Q440 130 576 104 V172 Q576 182 566 182 H34 Q24 182 24 172 Z"/><text x="300" y="152" text-anchor="middle">Les Coteaux</text></g>
+            <g class="zone" data-zone="pradet" role="button" tabindex="0" aria-pressed="false" aria-label="Le Pradet"><rect class="forme" x="24" y="194" width="196" height="136" rx="12"/><text x="122" y="268" text-anchor="middle">Le Pradet</text></g>
+            <g class="zone" data-zone="centre" role="button" tabindex="0" aria-pressed="false" aria-label="Centre bastide"><rect class="forme" x="232" y="194" width="136" height="136" rx="12"/><text x="300" y="258" text-anchor="middle">Centre</text><text x="300" y="280" text-anchor="middle">bastide</text></g>
+            <g class="zone" data-zone="gare" role="button" tabindex="0" aria-pressed="false" aria-label="Gare Saint-Jean"><rect class="forme" x="380" y="194" width="196" height="136" rx="12"/><text x="478" y="268" text-anchor="middle">Gare Saint-Jean</text></g>
+            <g class="zone" data-zone="quais" role="button" tabindex="0" aria-pressed="false" aria-label="Les Quais"><rect class="forme" x="24" y="342" width="552" height="50" rx="12"/><text x="300" y="373" text-anchor="middle">Les Quais</text></g>
+            <path d="M0 418 Q100 402 200 418 T400 418 T600 414" fill="none" stroke="#7F97E0" stroke-width="10" stroke-linecap="round" aria-hidden="true"/>
+            <text x="560" y="444" text-anchor="end" style="font:600 15px Archivo, sans-serif;fill:#4F5660" aria-hidden="true">La Garonne</text>
+          </svg>
+          <div class="fiche-quartier" data-fiche-quartier aria-live="polite">
+            <p>Choisissez un quartier sur le plan, ou consultez le tableau.</p>
+          </div>
+        </div>
+
+        <div class="table-defile" style="margin-top:2rem" tabindex="0" role="region" aria-labelledby="legende-quartiers">
+          <table>
+            <caption id="legende-quartiers">Les six quartiers de Vallenoire et leurs mesures prioritaires</caption>
+            <thead><tr><th scope="col">Quartier</th><th scope="col">Qui y vit</th><th scope="col">Ce qui compte ici</th><th scope="col">Mesures prioritaires</th></tr></thead>
+            <tbody>
+              <tr data-quartier-ligne="hameaux" data-mesures="19 3 5"><th scope="row">Hameaux viticoles</th><td>Agriculteurs, retraités isolés</td><td>L’isolement, le transport</td><td><a href="#mesure-19">19</a>, <a href="#mesure-3">3</a>, <a href="#mesure-5">5</a></td></tr>
+              <tr data-quartier-ligne="coteaux" data-mesures="1 2 4 16"><th scope="row">Les Coteaux</th><td>Familles de 41 à 60 ans, maisons individuelles</td><td>La taxe foncière, la cantine, les trajets</td><td><a href="#mesure-1">1</a>, <a href="#mesure-2">2</a>, <a href="#mesure-4">4</a>, <a href="#mesure-16">16</a></td></tr>
+              <tr data-quartier-ligne="pradet" data-mesures="2 5 6 20 10"><th scope="row">Le Pradet</th><td>Revenus modestes, familles, jeunes</td><td>Le pouvoir d’achat, des bus trop rares</td><td><a href="#mesure-2">2</a>, <a href="#mesure-5">5</a>, <a href="#mesure-6">6</a>, <a href="#mesure-20">20</a>, <a href="#mesure-10">10</a></td></tr>
+              <tr data-quartier-ligne="centre" data-mesures="7 9 13 18"><th scope="row">Centre bastide</th><td>Surtout des 60 ans et plus, des commerçants</td><td>Des commerces vides, des trottoirs étroits, un centre calme le soir</td><td><a href="#mesure-7">7</a>, <a href="#mesure-9">9</a>, <a href="#mesure-13">13</a>, <a href="#mesure-18">18</a></td></tr>
+              <tr data-quartier-ligne="gare" data-mesures="9 13 21"><th scope="row">Gare Saint-Jean</th><td>Actifs de 26 à 40 ans</td><td>Une gare peu fréquentée le soir, des parkings à vélos</td><td><a href="#mesure-9">9</a>, <a href="#mesure-13">13</a>, <a href="#mesure-21">21</a></td></tr>
+              <tr data-quartier-ligne="quais" data-mesures="13 11 21"><th scope="row">Les Quais</th><td>Retraités et jeunes couples</td><td>L’éclairage des berges, le stationnement</td><td><a href="#mesure-13">13</a>, <a href="#mesure-11">11</a>, <a href="#mesure-21">21</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="chiffres" aria-labelledby="titre-chiffres">
+      <div class="conteneur">
+        <div class="entete-section">
+          <p class="surtitre">Chiffres clés</p>
+          <h2 class="titre" id="titre-chiffres">Pourquoi le pouvoir d’achat d’abord</h2>
+          <p class="chapo">Des chiffres nationaux récents, avec leur source : chacun peut les vérifier.</p>
+        </div>
+        <ul class="chiffres" role="list">
+          <li class="chiffre"><span class="valeur">+2,4 %</span><span>Prix à la consommation sur un an, en août 2026</span><span class="source">Source : <a href="https://www.insee.fr/fr/statistiques/9051406" target="_blank" rel="noopener">Insee, Informations rapides n° 218<span class="sr-only"> (nouvel onglet)</span></a></span></li>
+          <li class="chiffre"><span class="valeur">+16,7 %</span><span>Prix de l’énergie sur un an, en août 2026</span><span class="source">Source : <a href="https://www.insee.fr/fr/statistiques/9051406" target="_blank" rel="noopener">Insee, Informations rapides n° 218<span class="sr-only"> (nouvel onglet)</span></a></span></li>
+          <li class="chiffre"><span class="valeur">488 €</span><span>Budget moyen de rentrée par foyer, soit 79 € de plus qu’en 2025</span><span class="source">Source : <a href="https://www.cofidis.fr/fr/questions-de-budget/projets-des-francais/enquete-budget-rentree-scolaire-2026.html" target="_blank" rel="noopener">enquête Cofidis, rentrée 2026<span class="sr-only"> (nouvel onglet)</span></a></span></li>
+          <li class="chiffre"><span class="valeur">46 %</span><span>des parents disent avoir du mal à financer la rentrée</span><span class="source">Source : <a href="https://www.empruntis.com/rachat-credits/actualites/2026/budget-rentree-scolaire-2026-parents-craignent-manque-argent-21172/" target="_blank" rel="noopener">Empruntis, d’après l’enquête Cofidis<span class="sr-only"> (nouvel onglet)</span></a></span></li>
+          <li class="chiffre"><span class="valeur">56 %</span><span>des parents craignent de manquer d’argent</span><span class="source">Source : <a href="https://www.empruntis.com/rachat-credits/actualites/2026/budget-rentree-scolaire-2026-parents-craignent-manque-argent-21172/" target="_blank" rel="noopener">Empruntis, d’après l’enquête Cofidis<span class="sr-only"> (nouvel onglet)</span></a></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section fond-sombre" id="methode" aria-labelledby="titre-methode">
+      <div class="conteneur">
+        <div class="entete-section">
+          <p class="surtitre">La méthode</p>
+          <h2 class="titre" id="titre-methode">Une mairie qui rend des comptes</h2>
+          <p class="chapo">Promettre ne suffit pas. Chaque année, vous pourrez vérifier où en est chaque engagement.</p>
+        </div>
+        <ol class="etapes-methode" role="list">
+          <li><h3>Le budget en une page</h3><p>Publié chaque année : ce que coûte chaque engagement et comment il est financé.</p></li>
+          <li><h3>Une permanence par mois</h3><p>Dans chacun des 6 quartiers, pour écouter, répondre et corriger ce qui doit l’être.</p></li>
+          <li><h3>Le bilan à mi-mandat</h3><p>Mesure par mesure, en réunion publique : ce qui est fait et ce qui reste à faire.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section fond-bleu" aria-labelledby="titre-appel">
+      <div class="conteneur appel">
+        <div class="pile">
+          <h2 class="titre" id="titre-appel">Ce programme, on le porte ensemble.</h2>
+          <p>2 heures par semaine suffisent pour faire la différence dans votre quartier.</p>
+          {{PARTAGE}}
+        </div>
+        <a class="btn btn-blanc" href="engagement.html">Je rejoins l’équipe <span class="fleche" aria-hidden="true">→</span></a>
+      </div>
+    </section>

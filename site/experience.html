@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Version animée · Camille Ferrand, Vallenoire (projet étudiant)</title>
+  <meta name="description" content="Camille Ferrand, la candidate du quotidien à Vallenoire : pouvoir d’achat, tranquillité, proximité. Projet étudiant : candidate et ville fictives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="campagne.css">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#4169E1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Camille Ferrand · Vallenoire">
+  <meta property="og:title" content="Camille Ferrand · Vallenoire, le quotidien d’une ville qui nous facilite la vie">
+  <meta property="og:description" content="Pouvoir d’achat, tranquillité, mobilité : 24 mesures concrètes et vérifiables. Projet étudiant : candidate et ville fictives.">
+  <meta property="og:image" content="https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/images/og-image.jpg">
+  <link rel="canonical" href="https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Camille Ferrand · Vallenoire, le quotidien d’une ville qui nous facilite la vie">
+  <meta name="twitter:description" content="Pouvoir d’achat, tranquillité, mobilité : 24 mesures concrètes et vérifiables. Projet étudiant : candidate et ville fictives.">
+  <meta name="twitter:image" content="https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/images/og-image.jpg">
+</head>
+<body>
+  <a class="lien-version" href="index.html">Revenir à la version accessible du site</a>
+
+  <!-- ══════════ PRELOADER ══════════ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <p class="loader-wordmark">Camille Ferrand</p>
+      <span class="loader-rule"><i id="loaderBar"></i></span>
+    </div>
+  </div>
+
+  <!-- ══════════ CONTENU ══════════ -->
+  <main class="smooth" id="smooth">
+
+    <!-- ─── SCÈNE 1 · PASTEBOARD → ZOOM TEXTE → SÉRIE EN LUMIÈRE ─── -->
+    <section class="scene s-hero" id="hero" data-pin="5">
+      <div class="pin">
+
+        <div class="floaters" aria-hidden="true">
+          <figure class="fl" style="--x:-4%;  --y:13%; --w:196px" data-d="0.55"><img src="images/detail-1.jpg" alt=""></figure>
+          <figure class="fl" style="--x:21%;   --y:3%; --w:142px" data-d="0.90"><img src="images/detail-2.jpg" alt=""></figure>
+          <figure class="fl" style="--x:40%;  --y:-8%; --w:232px" data-d="0.40"><img src="images/detail-7.jpg" alt=""></figure>
+          <figure class="fl" style="--x:63%;  --y:7%; --w:126px" data-d="0.75"><img src="images/detail-4.jpg" alt=""></figure>
+          <figure class="fl" style="--x:85%;  --y:1%; --w:208px" data-d="1.00"><img src="images/detail-6.jpg" alt=""></figure>
+          <figure class="fl" style="--x:-2%;  --y:45%; --w:116px" data-d="0.50"><img src="images/detail-5.jpg" alt=""></figure>
+          <figure class="fl" style="--x:94%;  --y:37%; --w:172px" data-d="0.70"><img src="images/detail-3.jpg" alt=""></figure>
+          <figure class="fl" style="--x:13%;  --y:71%; --w:248px" data-d="0.35"><img src="images/camille-ferrand.jpg" alt=""></figure>
+          <figure class="fl" style="--x:44%;  --y:81%; --w:134px" data-d="0.85"><img src="images/detail-10.jpg" alt=""></figure>
+          <figure class="fl" style="--x:73%;  --y:64%; --w:188px" data-d="0.60"><img src="images/detail-8.jpg" alt=""></figure>
+        </div>
+
+        <div class="hero-copy">
+          <p class="hero-kicker mono" id="heroKicker">CAMILLE FERRAND · CANDIDATE À VALLENOIRE</p>
+          <h1 class="hero-title">
+            <span class="hero-line1" id="heroLine1">Le quotidien d’une ville</span>
+            <span class="hero-line2" id="heroLine2">
+              <span class="hl">qui nous</span>
+              <span class="grow" id="grow1"><img src="images/hero.jpg" alt="La place à arcades de Vallenoire un samedi de marché"></span>
+              <span class="hl">facilite la vie.</span>
+            </span>
+          </h1>
+        </div>
+
+        <!-- calque plein écran : titre blanc sur l'image -->
+        <div class="spot" id="spot" aria-hidden="true">
+          <h2 class="spot-intro" id="spotIntro"><span>Moins</span> <span>de</span> <span>dépenses.</span> <span>Plus</span> <span>de</span> <span>tranquillité.</span></h2>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── SCÈNE 2 · MANIFESTE (remplissage caractère par caractère) ─── -->
+    <section class="scene s-fill" id="manifeste" data-pin="3.5">
+      <div class="pin">
+        <p class="fill-text" id="fillText">Camille Ferrand connaît Vallenoire rue par rue. Pas de grands discours : des mesures chiffrées, datées, <span class="boxed" id="boxedPhrase">vérifiables par tous<svg class="box-svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path id="boxPath" d="M50,6 C88,4 98,22 97,50 C96,82 76,96 49,95 C16,94 3,76 4,48 C5,18 20,7 50,6 Z"/></svg></span> à la fin du mandat.</p>
+      </div>
+    </section>
+
+    <!-- ─── SCÈNE 3 · SÉLECTION (panneau blanc, masonry parallaxe) ─── -->
+    <section class="collection" id="travaux">
+      <header class="coll-head">
+        <p class="mono ash">LE PROJET EN 4 PILIERS</p>
+        <h2 class="coll-title" id="collTitle">Ce qui change pour vous</h2>
+        <p class="coll-sub">Deux priorités, deux engagements de fond, 24 mesures concrètes.</p>
+        <p class="mono ash">24 MESURES · 4 PILIERS</p>
+      </header>
+
+      <div id="collGrid"></div>
+    </section>
+
+    <!-- ─── 5 · DEVISE — train de mots-clés géants sur bande lime ─── -->
+    <div class="band" id="temps">
+      <div class="diag to-lime" aria-hidden="true"></div>
+      <section class="scene s-motto" data-pin="4">
+        <div class="pin motto-pin">
+          <p class="motto-kicker mono" id="mottoKicker">CE QUI GUIDE CAMILLE</p>
+          <div class="motto-track" id="mottoTrack"></div>
+          <p class="motto-hint mono" id="mottoHint"></p>
+        </div>
+      </section>
+      <div class="diag from-lime" aria-hidden="true"></div>
+    </div>
+
+    <!-- ─── SCÈNE 5 · « UN PROJET, 3 ÉTAPES » → LE PROCESSUS IMMERSIF ─── -->
+    <section class="scene s-night" id="explorer" data-pin="9">
+      <div class="pin">
+
+        <div class="night-line" id="nightLine">
+          <span class="hl nw" id="nw1">Une</span>
+          <span class="hl nw" id="nw2">campagne,</span>
+          <span class="grow" id="grow2"><img src="images/benevoles.jpg" alt="Des mains tiennent des tracts devant une porte bleue, dans une rue pavée"></span>
+          <span class="hl nw" id="nw3">3 façons d’agir.</span>
+        </div>
+
+        <!-- compteur monumental : le numéro d'étape défile comme un odomètre -->
+        <div class="bignum" id="bigNum" aria-hidden="true"><span class="bignum-fixed">0</span><span class="bignum-roll"><span id="bigRoll"></span></span></div>
+
+        <!-- contenu de l'étape, à gauche -->
+        <div class="psteps" id="psteps"></div>
+
+        <p class="steps-cta" id="stepsCta">
+          <a href="engagement.html" data-nav id="stepsCtaLink">Je m’engage →<svg class="cta-oval" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path id="ctaOval" d="M50,6 C88,4 98,22 97,50 C96,82 76,96 49,95 C16,94 3,76 4,48 C5,18 20,7 50,6 Z"/></svg></a>
+        </p>
+
+        <!-- rideau de lames : essuie le plein écran SANS jamais dézoomer -->
+        <div class="wipe" id="nightWipe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+      </div>
+    </section>
+
+    <!-- ─── 8 · PREUVE SOCIALE — citation en rideau, guillemets géants ─── -->
+    <section class="scene s-quote" id="temoignage" data-pin="3">
+      <div class="pin">
+        <div class="q-stack">
+          <span class="q-glyph" aria-hidden="true">“</span>
+          <blockquote class="q-block">
+            <p class="q-text" id="quoteText"></p>
+          </blockquote>
+          <div class="q-sign">
+            <span class="q-rule" aria-hidden="true"></span>
+            <div class="q-sign-row" id="quoteAuthorWrap">
+              <p class="q-name" id="quoteAuthor"></p>
+              <p class="q-ctx mono ash" id="figKicker"></p>
+              <p class="q-fig" id="bigFigure"><span class="fig-pre" id="figPre"></span><span class="fig-val" id="figVal">0</span><span class="fig-unit" id="figUnit"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SCÈNE 9 · OBJECTIONS — PHRASES + TRAÎNÉE D'IMAGES SOUS LA SOURIS ─── -->
+    <section class="scene s-final" id="final" data-pin="2.6">
+      <div class="pin">
+        <p class="final-text">
+          <span class="fs" id="fs1">Pas de promesses en l’air.</span>
+          <span class="fs" id="fs2">Pas de discours partisan.</span>
+          <span class="fs" id="fs3">Pas de solution toute faite.</span><br>
+          <span class="fs" id="fs4">Juste Vallenoire, <span class="pill" id="pillPhrase">ensemble.<svg class="pill-svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path id="pillPath" d="M50,6 C88,4 98,22 97,50 C96,82 76,96 49,95 C16,94 3,76 4,48 C5,18 20,7 50,6 Z"/></svg></span></span>
+        </p>
+
+        <!-- réserve d'images pour la traînée sous la souris -->
+        <div class="trail" id="trail" aria-hidden="true">
+          <img src="images/trail-01.jpg"   style="--tw:150px" alt="">
+          <img src="images/trail-02.jpg"   style="--tw:190px" alt="">
+          <img src="images/trail-03.jpg"  style="--tw:120px" alt="">
+          <img src="images/trail-04.jpg"  style="--tw:200px" alt="">
+          <img src="images/trail-05.jpg" style="--tw:96px"  alt="">
+          <img src="images/trail-06.jpg"  style="--tw:170px" alt="">
+          <img src="images/trail-07.jpg"  style="--tw:34px"  alt="">
+          <img src="images/trail-08.jpg"  style="--tw:140px" alt="">
+          <img src="images/trail-09.jpg"  style="--tw:200px" alt="">
+          <img src="images/trail-10.jpg" style="--tw:110px" alt="">
+          <img src="images/trail-11.jpg"  style="--tw:28px"  alt="">
+          <img src="images/trail-12.jpg"  style="--tw:160px" alt="">
+          <img src="images/trail-13.jpg"  style="--tw:130px" alt="">
+          <img src="images/trail-14.jpg"  style="--tw:180px" alt="">
+          <img src="images/trail-15.jpg"  style="--tw:40px"  alt="">
+          <img src="images/trail-16.jpg"  style="--tw:150px" alt="">
+          <img src="images/trail-17.jpg"  style="--tw:120px" alt="">
+          <img src="images/trail-18.jpg"  style="--tw:200px" alt="">
+          <img src="images/trail-19.jpg" style="--tw:100px" alt="">
+          <img src="images/trail-20.jpg"  style="--tw:170px" alt="">
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="footer" id="contact">
+      <p class="footer-kicker mono ash reveal">UNE QUESTION, UNE IDÉE ?</p>
+      <a class="footer-mail reveal" href="mailto:[EMAIL_EQUIPE]"><span class="footer-mail-text">[EMAIL_EQUIPE]</span></a>
+      <p class="footer-reassurance mono ash reveal">RÉPONSE SOUS 48 H · CHAQUE MESSAGE EST LU PAR L’ÉQUIPE</p>
+      <h2 class="footer-name" id="footerName" aria-label="Camille Ferrand">Camille Ferrand</h2>
+      <div class="footer-bottom">
+        <p class="mono ash">© 2026 · VALLENOIRE, VALLÉE DE LA GARONNE</p>
+        <p class="mono"><a href="[URL_FACEBOOK]" target="_blank" rel="noopener">FACEBOOK ↗</a>&nbsp;&nbsp;&nbsp;<a href="[URL_INSTAGRAM]" target="_blank" rel="noopener">INSTAGRAM ↗</a></p>
+        <p class="mono ash">PROJET ÉTUDIANT · CANDIDATE ET VILLE FICTIVES</p>
+      </div>
+      <nav class="footer-pages" aria-label="Autres pages du site">
+        <a href="index.html">Version accessible</a>
+        <a href="programme.html">Programme</a>
+        <a href="je-vote.html">Je vote</a>
+        <a href="engagement.html">Je m’engage</a>
+        <a href="question.html">Une question ?</a>
+        <a href="presse.html">Presse</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="donnees.html">Données personnelles</a>
+        <a href="accessibilite.html">Accessibilité</a>
+      </nav>
+    </footer>
+
+  </main>
+
+  <!-- ══════════ CHROME FIXE — barre flottante en haut ══════════ -->
+
+  <header class="dock" id="dock">
+    <a class="dock-wordmark" href="#hero" data-nav>Camille Ferrand</a>
+    <nav class="dock-nav" aria-label="Navigation principale">
+      <a class="dock-link mono" href="#travaux" data-nav>PROJET</a>
+      <a class="dock-link mono" href="#explorer" data-nav data-landing="0.8">AGIR</a>
+    </nav>
+    <a class="dock-cta mono" href="engagement.html" data-nav>JE M’ENGAGE</a>
+  </header>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+  <script src="config.js"></script>
+  <script src="campagne.js" defer></script>
+</body>
+</html>

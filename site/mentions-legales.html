@@ -1,40 +1,122 @@
 <!DOCTYPE html>
-<html lang="fr" class="sans-js">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mentions légales · Camille Ferrand, Vallenoire (projet étudiant)</title>
-  <meta name="description" content="Mentions légales du site de campagne fictif de Camille Ferrand à Vallenoire, projet étudiant.">
+  <meta name="description" content="Mentions légales du site de campagne fictif de Camille Ferrand. Projet étudiant.">
+  <!-- Projet étudiant : le site ne doit pas apparaître dans les moteurs de recherche.
+       Pour l'ouvrir un jour, remplacer "noindex, nofollow" par "index, follow". -->
   <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/mentions-legales.html">
   <meta name="theme-color" content="#4169E1">
+  <meta name="color-scheme" content="light">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Camille Ferrand · Vallenoire">
+  <meta property="og:title" content="Mentions légales">
+  <meta property="og:description" content="Mentions légales du site de campagne fictif de Camille Ferrand. Projet étudiant.">
+  <meta property="og:url" content="https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/mentions-legales.html">
+  <meta property="og:image" content="https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Camille Ferrand, sur fond bleu, avec le slogan : Vallenoire, le quotidien d’une ville qui nous facilite la vie">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&amp;display=swap" rel="stylesheet">
+  <script>
+    /* Préférences d'affichage appliquées avant l'affichage (voir campagne.js) */
+    (function (r) {
+      r.classList.add('js');
+      try {
+        var t = localStorage.getItem('cf-texte');
+        if (t === 'grand') r.classList.add('texte-grand');
+        if (t === 'tres-grand') r.classList.add('texte-tres-grand');
+        [['cf-contraste', 'contraste'], ['cf-espace', 'espace'], ['cf-lisible', 'lisible'], ['cf-sans-animation', 'sans-animation']]
+          .forEach(function (p) { if (localStorage.getItem(p[0]) === '1') r.classList.add(p[1]); });
+      } catch (e) {}
+    })(document.documentElement);
+  </script>
   <link rel="stylesheet" href="campagne.css">
+  <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Camille Ferrand · Vallenoire", "url": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/", "inLanguage": "fr-FR", "description": "Site de campagne municipale fictif, réalisé dans le cadre d’un projet étudiant."}, {"@context": "https://schema.org", "@type": "Person", "name": "Camille Ferrand", "description": "Candidate fictive aux élections municipales de Vallenoire (ville fictive), projet étudiant.", "image": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/images/camille-ferrand.jpg", "url": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/"}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/"}, {"@type": "ListItem", "position": 2, "name": "Mentions légales", "item": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/mentions-legales.html"}]}]</script>
 </head>
 <body class="page">
-  <div id="entete-commun"></div>
-  <noscript><p style="padding:120px 16px 0"><a href="index.html">Accueil</a> · <a href="donnees.html">Données personnelles</a></p></noscript>
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+  <aside class="bandeau" aria-label="Avertissement"><p><strong>Projet étudiant · candidate et ville fictives</strong></p><p class="compte" data-compte></p></aside>
+  <header class="entete">
+    <div class="conteneur entete-in">
+      <a class="marque" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#4169E1"/><path d="M14 50V30a18 18 0 0 1 36 0v20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="40" r="5" fill="#fff"/></svg><span translate="no">Camille Ferrand</span><span class="sr-only">, accueil</span></a>
+      <nav class="nav-principale" aria-label="Navigation principale"><ul><li><a href="programme.html">Programme</a></li><li><a href="engagement.html">Je m’engage</a></li><li><a href="je-vote.html">Je vote</a></li><li><a href="question.html">Une question ?</a></li><li><a href="presse.html">Presse</a></li></ul></nav>
+      <div class="outils">
+        <button class="btn-outil" type="button" data-ouvrir-affichage aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="2.5" fill="#fff" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="17" r="2.5" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span class="libelle">Affichage</span></button>
+        <a class="btn btn-bleu btn-petit btn-engage" href="engagement.html">Je m’engage</a>
+        <button class="btn-outil btn-menu" type="button" data-ouvrir-menu aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-mobile"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Menu</span></button>
+      </div>
+    </div>
+  </header>
+
+  <dialog class="menu-mobile" id="menu-mobile" aria-label="Menu">
+    <div class="dedans">
+      <div class="haut">
+        <a class="marque" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#4169E1"/><path d="M14 50V30a18 18 0 0 1 36 0v20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="40" r="5" fill="#fff"/></svg><span translate="no">Camille Ferrand</span></a>
+        <button class="btn-outil" type="button" data-fermer>Fermer</button>
+      </div>
+      <nav aria-label="Menu principal"><ul><li><a href="index.html">Accueil</a></li><li><a href="programme.html">Programme</a></li><li><a href="engagement.html">Je m’engage</a></li><li><a href="je-vote.html">Je vote</a></li><li><a href="question.html">Une question ?</a></li><li><a href="presse.html">Presse</a></li><li><a href="facile-a-lire.html">Facile à lire</a></li></ul></nav>
+      <div class="bas">
+        <button class="btn-outil" type="button" data-ouvrir-affichage aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="2.5" fill="#fff" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="17" r="2.5" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>Réglages d’affichage</span></button>
+        <p>Projet étudiant · candidate et ville fictives</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="panneau" id="panneau-affichage" aria-labelledby="titre-affichage">
+    <form method="dialog">
+      <div class="haut">
+        <h2 id="titre-affichage">Réglages d’affichage</h2>
+        <button class="btn-outil" type="button" data-fermer>Fermer</button>
+      </div>
+      <p class="discret">Vos choix restent enregistrés sur cet appareil pour toutes les pages.</p>
+      <fieldset>
+        <legend>Taille du texte</legend>
+        <div class="choix">
+          <label><input type="radio" name="texte" value="normal"> Normale</label>
+          <label><input type="radio" name="texte" value="grand"> Grande</label>
+          <label><input type="radio" name="texte" value="tres-grand"> Très grande</label>
+        </div>
+      </fieldset>
+      <div>
+        <label class="interrupteur"><span>Contraste renforcé<span class="aide">Texte noir sur fond blanc, bords marqués.</span></span><input type="checkbox" name="contraste" role="switch"></label>
+        <label class="interrupteur"><span>Texte plus espacé<span class="aide">Plus d’air entre les lignes, les mots et les lettres.</span></span><input type="checkbox" name="espace" role="switch"></label>
+        <label class="interrupteur"><span>Police très lisible<span class="aide">Lettres plus faciles à distinguer, utile en cas de dyslexie ou de vue basse.</span></span><input type="checkbox" name="lisible" role="switch"></label>
+        <label class="interrupteur"><span>Couper les animations<span class="aide">Aucun mouvement à l’écran.</span></span><input type="checkbox" name="animation" role="switch"></label>
+      </div>
+      <p class="discret" data-affichage-etat role="status"></p>
+      <div class="actions">
+        <button class="btn btn-bleu btn-petit" type="button" data-fermer>Terminé</button>
+        <button class="btn btn-contour btn-petit" type="button" data-reinitialiser>Revenir à l’affichage par défaut</button>
+      </div>
+    </form>
+  </dialog>
 
   <main id="contenu" tabindex="-1">
-    <section class="heros">
-      <div class="conteneur">
-        <div class="texte" style="display:grid;gap:18px">
-          <p class="surtitre">Informations légales</p>
-          <h1 class="affiche">Mentions légales</h1>
-          <p class="chapo">Ce site est un <strong>projet étudiant</strong> réalisé dans le cadre d’une école de communication. La candidate, Camille Ferrand, et la ville de Vallenoire sont <strong>fictives</strong>. Ce site n’est pas un site officiel et n’est rattaché à aucune mairie ni à aucun parti.</p>
-        </div>
+<nav class="ariane conteneur" aria-label="Fil d’Ariane"><ol><li><a href="index.html">Accueil</a></li><li><span aria-current="page">Mentions légales</span></li></ol></nav>
+    <section class="heros-seul" aria-labelledby="titre-page">
+      <div class="conteneur texte-heros">
+        <p class="surtitre">Informations légales</p>
+        <h1 class="affiche" id="titre-page">Mentions légales</h1>
+        <p class="chapo">Ce site est un <strong>projet étudiant</strong> réalisé dans une école de communication. La candidate, <span translate="no">Camille Ferrand</span>, et la ville de Vallenoire sont <strong>fictives</strong>. Ce site n’est pas un site officiel et n’est rattaché à aucune mairie ni à aucun parti.</p>
       </div>
     </section>
 
-    <section class="section blanc">
+    <section class="section fond-blanc" aria-label="Détail des mentions légales">
       <div class="conteneur texte-long">
-        <h2>Éditeur du site</h2>
-        <p>Nom ou raison sociale : <span class="placeholder">[NOM_EDITEUR]</span><br>
-        Adresse : <span class="placeholder">[ADRESSE_EDITEUR]</span><br>
-        Contact : <a data-config="emailEquipe" href="question.html">formulaire de contact</a><br>
-        École : <span class="placeholder">[NOM_ECOLE]</span>, <span class="placeholder">[PROMOTION]</span></p>
+<h2>Éditeur du site</h2>
+        <p>Nom ou raison sociale : <span class="placeholder">[NOM_EDITEUR]</span><br>
+        Adresse : <span class="placeholder">[ADRESSE_EDITEUR]</span><br>
+        Contact : <a data-config="emailEquipe" href="question.html">formulaire de contact</a><br>
+        École : <span class="placeholder">[NOM_ECOLE]</span>, <span class="placeholder">[PROMOTION]</span></p>
 
         <h2>Directeur ou directrice de la publication</h2>
         <p><span class="placeholder">[NOM_DIRECTEUR_PUBLICATION]</span></p>
@@ -48,14 +130,17 @@
 
         <h2>Crédits</h2>
         <h3>Portrait</h3>
-        <p>Portrait de la candidate : <span class="placeholder">[CREDIT_PORTRAIT]</span>. Utilisé avec l’accord de la personne photographiée.</p>
+        <p>Portrait de la candidate : <span class="placeholder">[CREDIT_PORTRAIT]</span>. Utilisé avec l’accord de la personne photographiée.</p>
         <h3>Images d’illustration</h3>
-        <p>Certaines images d’illustration ont été générées par IA (outil ChatGPT) par l’équipe du projet : place du marché, tracts devant une porte, rue de l’école, plateau de cantine. Elles ne représentent aucun lieu ni aucune personne réels.</p>
-        <p>Les autres photographies proviennent de la banque d’images <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash<span class="sr-only"> (nouvel onglet)</span></a>, sous <a href="https://unsplash.com/license" target="_blank" rel="noopener">licence Unsplash<span class="sr-only"> (nouvel onglet)</span></a> : quais, coteaux, salle de réunion et petits détails (arcades, volets, marché, vélos, lampadaire, terrasse). La liste détaillée, avec le lien de chaque photo, figure dans le fichier <code>site/images/CREDITS.md</code> du dépôt du projet.</p>
+        <p>Certaines images d’illustration ont été générées par IA (outil ChatGPT) par l’équipe du projet : place du marché, tracts devant une porte, rue de l’école, plateau de cantine. Elles ne représentent aucun lieu ni aucune personne réels.</p>
+        <p>Les autres photographies proviennent de la banque d’images <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash<span class="sr-only"> (nouvel onglet)</span></a>, sous <a href="https://unsplash.com/license" target="_blank" rel="noopener">licence Unsplash<span class="sr-only"> (nouvel onglet)</span></a> : quais, coteaux, salle de réunion et petits détails (arcades, volets, marché, vélos, lampadaire, terrasse). La liste détaillée, avec le lien de chaque photo, figure dans le fichier <code>site/images/CREDITS.md</code> du dépôt du projet.</p>
         <h3>Typographie et illustrations</h3>
         <p>Police Archivo (Omnibus-Type), licence SIL Open Font License, servie par Google Fonts. Illustrations, logo et pictogrammes réalisés pour le projet.</p>
         <h3>Structure du site</h3>
-        <p>Page d’accueil réalisée à partir du modèle « Site Immersif ».</p>
+        <p>La <a href="experience.html">version animée</a> du site est réalisée à partir du modèle « Site Immersif ».</p>
+
+        <h2>Accessibilité</h2>
+        <p>L’état d’accessibilité du site et les moyens de signaler un problème sont détaillés sur la page <a href="accessibilite.html">Accessibilité</a>.</p>
 
         <h2>Données personnelles</h2>
         <p>Tout ce qui concerne vos données est expliqué sur la page <a href="donnees.html">Données personnelles</a>.</p>
@@ -63,7 +148,61 @@
     </section>
   </main>
 
-  <div id="pied-commun"></div>
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied-haut">
+        <div>
+          <a class="marque" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#4169E1"/><path d="M14 50V30a18 18 0 0 1 36 0v20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="40" r="5" fill="#fff"/></svg><span translate="no">Camille Ferrand</span></a>
+          <p class="slogan">Vallenoire, le quotidien d’une ville qui nous facilite la vie !</p>
+          <div class="partage" data-partage>
+              <span>Partager</span>
+              <a data-partage-facebook href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21h3z"/></svg>Facebook<span class="sr-only"> (nouvel onglet)</span></a>
+              <a data-partage-whatsapp href="https://wa.me/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 20l1.2-3.6A8 8 0 1 1 8 19z"/></svg>WhatsApp<span class="sr-only"> (nouvel onglet)</span></a>
+              <button type="button" data-copier hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Copier le lien</button>
+              <p class="sr-only" data-copie-etat role="status"></p>
+            </div>
+        </div>
+        <nav aria-labelledby="pied-programme">
+          <h2 id="pied-programme">Le projet</h2>
+          <ul>
+            <li><a href="programme.html">Le programme</a></li>
+            <li><a href="facile-a-lire.html">Le programme en facile à lire</a></li>
+            <li><a href="programme.html#simulateur">Ce que je gagne</a></li>
+            <li><a href="programme.html#quartiers">Quartier par quartier</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="pied-agir">
+          <h2 id="pied-agir">Agir</h2>
+          <ul>
+            <li><a href="engagement.html">Je m’engage</a></li>
+            <li><a href="engagement.html#agenda">Les prochains rendez-vous</a></li>
+            <li><a href="je-vote.html">Je vote</a></li>
+            <li><a href="question.html">Poser une question</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="pied-infos">
+          <h2 id="pied-infos">Informations</h2>
+          <ul>
+            <li><a href="presse.html">Espace presse</a></li>
+            <li><a href="accessibilite.html">Accessibilité</a></li>
+            <li><a href="plan-du-site.html">Plan du site</a></li>
+            <li><a href="mentions-legales.html">Mentions légales</a></li>
+            <li><a href="donnees.html">Données personnelles</a></li>
+            <li><a href="experience.html">Version animée</a></li>
+            <li><a data-config="emailEquipe" href="question.html">Écrire à l’équipe</a></li>
+            <li><a data-reseau="facebook" href="#" hidden target="_blank" rel="noopener">Facebook<span class="sr-only"> (nouvel onglet)</span></a><span data-bientot class="discret">Facebook et Instagram : bientôt</span></li>
+            <li><a data-reseau="instagram" href="#" hidden target="_blank" rel="noopener">Instagram<span class="sr-only"> (nouvel onglet)</span></a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="pied-bas">
+        <p>© 2026 · Vallenoire, vallée de la Garonne</p>
+        <p><strong>Projet étudiant · candidate et ville fictives</strong></p>
+      </div>
+    </div>
+    <a class="btn btn-bleu cta-flottant" href="engagement.html">Je m’engage <span class="fleche" aria-hidden="true">→</span></a>
+  </footer>
+
   <script src="config.js"></script>
   <script src="campagne.js" defer></script>
 </body>

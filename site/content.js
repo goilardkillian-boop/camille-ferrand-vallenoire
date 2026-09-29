@@ -13,7 +13,7 @@ window.SITE_CONTENT = {
 
   brand: {
     name: 'Camille Ferrand',
-    title: 'Camille Ferrand · Municipales à Vallenoire (projet étudiant)',
+    title: 'Version animée · Camille Ferrand, Vallenoire (projet étudiant)',
     description: 'Camille Ferrand, la candidate du quotidien à Vallenoire : pouvoir d’achat, tranquillité, proximité. Projet étudiant : candidate et ville fictives.',
     kicker: 'CAMILLE FERRAND · CANDIDATE À VALLENOIRE',
     copyright: '© 2026 · VALLENOIRE, VALLÉE DE LA GARONNE',
