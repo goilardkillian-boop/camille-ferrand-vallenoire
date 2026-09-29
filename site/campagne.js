@@ -163,15 +163,108 @@
     }
   });
 
-  /* ═══════════ APPARITIONS DOUCES ═══════════ */
-  const aReveler = $$('.apparait');
-  if (mouvementReduit() || !('IntersectionObserver' in window)) aReveler.forEach((el) => el.classList.add('vu'));
-  else {
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('vu'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
-    aReveler.forEach((el) => io.observe(el));
-    /* Sécurité : tout est visible après 2,5 s même si l'observateur ne s'est pas déclenché */
-    setTimeout(() => aReveler.forEach((el) => el.classList.add('vu')), 2500);
+  /* ═══════════ ANIMATIONS ═══════════
+     Tout est lisible sans elles : elles se coupent avec le réglage
+     « Couper les animations » ou la préférence du système. */
+
+  /* Titre principal : chaque mot devient un bloc qui monte à son tour */
+  $$('.heros h1, .heros-seul h1').forEach((h1) => {
+    let i = 0;
+    [...h1.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((m) => {
+          if (!m) return;
+          if (/^\s+$/.test(m)) { frag.appendChild(document.createTextNode(m)); return; }
+          const s = document.createElement('span'); s.className = 'mot-h'; s.style.setProperty('--i', i++); s.textContent = m; frag.appendChild(s);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) { n.classList.add('mot-h'); n.style.setProperty('--i', i++); }
+    });
+  });
+
+  /* Blocs qui apparaissent au défilement, en cascade dans une même liste */
+  const CIBLES = ['.entete-section', '.grille-3 > li', '.carte', '.pilier-carte', '.etape', '.devise > li', '.engagements > li',
+    '.chiffres > li', '.falc > li', '.kit > li', '.faq > details', '.citation > img', '.citation > figure', '.encadre',
+    '.mesures > li', '.etapes-methode > li', '.appel > *', '.fiche-quartier', '.plan-quartiers', '.pilier-entete'].join(',');
+  const reveler = (liste) => {
+    liste.forEach((el) => {
+      if (el.closest('.heros, .heros-seul, dialog, form, .succes')) return;
+      el.classList.add('apparait');
+      const freres = [...el.parentElement.children].filter((x) => x.matches(CIBLES));
+      el.style.setProperty('--i', Math.min(freres.indexOf(el), 5));
+    });
+    const els = liste.filter((el) => el.classList.contains('apparait')).concat($$('.souligne'));
+    if (mouvementReduit() || !('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('vu')); return; }
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      /* aussi les blocs déjà dépassés (défilement rapide, lien d'ancre) */
+      if (e.isIntersecting || e.boundingClientRect.bottom < 0) { e.target.classList.add('vu'); io.unobserve(e.target); }
+    }), { threshold: 0, rootMargin: '0px 0px -6% 0px' });
+    els.forEach((el) => io.observe(el));
+  };
+  reveler($$(CIBLES).concat($$('.apparait')));
+  /* le focus clavier ne tombe jamais dans un bloc encore transparent */
+  document.addEventListener('focusin', (e) => { const b = e.target.closest && e.target.closest('.apparait:not(.vu)'); if (b) b.classList.add('vu'); });
+  addEventListener('beforeprint', () => $$('.apparait, .souligne').forEach((el) => el.classList.add('vu')));
+
+  /* Chiffres qui montent jusqu'à leur valeur (les lecteurs d'écran lisent la valeur finale) */
+  const compter = (el) => {
+    const final = el.textContent.trim();
+    const m = final.match(/^(.*?)(\d+(?:[.,]\d+)?)(.*)$/);
+    if (!m || mouvementReduit()) return;
+    const cible = parseFloat(m[2].replace(',', '.'));
+    const dec = (m[2].split(/[.,]/)[1] || '').length;
+    const lu = document.createElement('span'); lu.className = 'sr-only'; lu.textContent = final;
+    el.after(lu); el.setAttribute('aria-hidden', 'true');
+    const t0 = performance.now(), duree = 1300;
+    const pas = (t) => {
+      const k = Math.min(1, (t - t0) / duree), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = m[1] + (cible * e).toLocaleString('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + m[3];
+      if (k < 1) requestAnimationFrame(pas); else el.textContent = final;
+    };
+    requestAnimationFrame(pas);
+  };
+  if ('IntersectionObserver' in window) {
+    const ioN = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { compter(e.target); ioN.unobserve(e.target); } }), { threshold: 0.6 });
+    $$('.chiffre .valeur, .chiffre-appui strong').forEach((el) => ioN.observe(el));
   }
+
+  /* Barre de progression de lecture (décorative) */
+  const barre = document.createElement('div');
+  barre.className = 'progression'; barre.setAttribute('aria-hidden', 'true');
+  document.body.prepend(barre);
+  const majBarre = () => {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    barre.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`;
+  };
+  addEventListener('scroll', majBarre, { passive: true }); majBarre();
+
+  /* Confettis aux couleurs de la campagne, 1,6 s, après un envoi réussi */
+  const confettis = () => {
+    if (mouvementReduit()) return;
+    const c = document.createElement('canvas');
+    c.className = 'confettis'; c.setAttribute('aria-hidden', 'true');
+    c.width = innerWidth; c.height = innerHeight; document.body.appendChild(c);
+    const ctx = c.getContext('2d');
+    const couleurs = ['#4169E1', '#3457C9', '#C9D5F7', '#E74D3D', '#EEE5D7', '#192026'];
+    const parts = Array.from({ length: 140 }, () => ({
+      x: innerWidth / 2 + (Math.random() - .5) * 120, y: innerHeight * .45,
+      vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4, r: Math.random() * 6 + 4,
+      a: Math.random() * Math.PI, va: (Math.random() - .5) * .3, c: couleurs[Math.floor(Math.random() * couleurs.length)]
+    }));
+    const t0 = performance.now();
+    const pas = (t) => {
+      const k = (t - t0) / 1600;
+      ctx.clearRect(0, 0, c.width, c.height);
+      parts.forEach((p) => {
+        p.vy += .45; p.x += p.vx; p.y += p.vy; p.a += p.va;
+        ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k); ctx.translate(p.x, p.y); ctx.rotate(p.a);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); ctx.restore();
+      });
+      if (k < 1) requestAnimationFrame(pas); else c.remove();
+    };
+    requestAnimationFrame(pas);
+  };
 
   /* CTA flottant sur mobile : caché quand un formulaire est à l'écran */
   const flottant = $('.cta-flottant');
@@ -217,11 +310,21 @@
   const jauge = $('[data-jauge]');
   let inscrits = null;
   const objectif = Number(CFG.objectifBenevoles) || 30;
-  const afficherJauge = (n) => {
+  let jaugeAnimee = false;
+  const afficherJauge = (n, direct) => {
     if (!jauge) return;
     inscrits = n;
     const barre = $('progress', jauge);
-    $$('[data-jauge-n]').forEach((el) => { el.textContent = n; });
+    $$('[data-jauge-n]').forEach((el) => {
+      el.textContent = n;
+      const lu = el.nextElementSibling;
+      if (lu && lu.classList.contains('sr-only')) lu.textContent = n;
+      if (!direct && !jaugeAnimee && 'IntersectionObserver' in window) {
+        jaugeAnimee = true;
+        const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { compter(el); io.disconnect(); } }, { threshold: 0.6 });
+        io.observe(el);
+      }
+    });
     $$('[data-jauge-objectif]').forEach((el) => { el.textContent = objectif; });
     if (barre) { barre.max = objectif; barre.value = mouvementReduit() ? n : 0; requestAnimationFrame(() => setTimeout(() => { barre.value = Math.min(n, objectif); }, 60)); barre.textContent = `${n} sur ${objectif}`; }
     const reste = $('[data-jauge-reste]');
@@ -229,12 +332,16 @@
   };
   if (jauge) {
     const repli = Number(CFG.benevolesRepli) || 0;
-    if (rempli(CFG.compteurCsv)) {
+    const urlCompteur = CFG.compteurUrl || CFG.compteurCsv;
+    let enCache = null;
+    try { enCache = JSON.parse(memoire.lire('cf-compteur') || 'null'); } catch (e) { enCache = null; }
+    if (enCache && Date.now() - enCache.t < 15 * 60 * 1000 && Number.isFinite(enCache.n)) afficherJauge(enCache.n);
+    else if (rempli(urlCompteur)) {
       const ctrl = 'AbortController' in window ? new AbortController() : null;
       const minuteur = setTimeout(() => ctrl && ctrl.abort(), 6000);
-      fetch(CFG.compteurCsv, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+      fetch(urlCompteur, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
         .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
-        .then((t) => { const m = t.match(/\d+/); if (!m) throw new Error('vide'); afficherJauge(parseInt(m[0], 10)); })
+        .then((t) => { const m = t.match(/\d+/); if (!m) throw new Error('vide'); const n = parseInt(m[0], 10); memoire.ecrire('cf-compteur', JSON.stringify({ n, t: Date.now() })); afficherJauge(n); })
         .catch(() => afficherJauge(repli))
         .finally(() => clearTimeout(minuteur));
     } else afficherJauge(repli);
@@ -255,6 +362,7 @@
         ${r.quartier ? `<p class="quartier">${esc(r.quartier)}</p>` : ''}
       </li>`;
     }).join('') : '<li class="vide">Les prochains rendez-vous seront bientôt annoncés. Écrivez-nous pour être prévenu.</li>';
+    reveler($$('.rdv', liste));
   });
   if (rdvAVenir.length && $('[data-agenda]')) {
     const s = document.createElement('script');
@@ -375,7 +483,8 @@
       const succes = $('[data-succes]', form.parentElement);
       form.hidden = true;
       if (succes) { succes.hidden = false; succes.focus(); }
-      if (kind === 'benevole' && inscrits !== null) afficherJauge(inscrits + 1);
+      if (kind === 'benevole' && inscrits !== null) afficherJauge(inscrits + 1, true);
+      confettis();
     };
 
     form.addEventListener('submit', (e) => {

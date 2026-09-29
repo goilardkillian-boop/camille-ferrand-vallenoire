@@ -1,236 +1,236 @@
-# Make · Mise en place des automatisations
+# Make + Airtable + Slack · le guide de A à Z
 
-Le site est 100 % statique : il n'a ni serveur ni base de données. Tout ce qui se passe **après** l'envoi d'un formulaire se fait dans **Make** :
+Le site est statique : il n'a ni serveur ni base de données. Tout ce qui se passe **après** l'envoi d'un formulaire se fait dans **Make** :
 
-- enregistrement dans la base de données (Google Sheets) ;
-- e-mails (alerte à l'équipe, bienvenue au bénévole, accusé de réception à l'habitant) ;
-- messages Slack pour l'équipe ;
-- tri et résumé des messages par l'IA de Make ;
-- compteur de bénévoles affiché sur le site ;
-- suppression des données après l'élection.
+```
+Site ──(formulaire)──▶ Make, scénario 1 ──▶ Airtable (la base de données)
+                                        ├─▶ Slack (alerte à l'équipe)
+                                        ├─▶ Gmail (e-mails)
+                                        └─▶ IA de Make (résumé et tri des messages)
 
-Les deux formulaires envoient vers **un seul webhook**. Le champ `kind` dit de quel formulaire il s'agit.
+Site ──(page Je m'engage)──▶ Make, scénario 2 ──▶ Airtable ──▶ renvoie le nombre de bénévoles (la jauge)
+```
+
+Durée totale : environ 1 h 30 la première fois. Tout est gratuit.
 
 ---
 
-## 1. Ce que le site envoie
+## Étape A · Créer les comptes (10 min)
 
-### Format technique
+1. **Airtable** : [airtable.com](https://airtable.com), « Sign up for free », avec goilard.killian@gmail.com.
+2. **Make** : [make.com](https://www.make.com), « Get started free », même adresse. Choisissez la région **EU** si elle est proposée.
+3. **Slack** : [slack.com](https://slack.com), « Créer un espace de travail » nommé `Campagne Camille Ferrand`.
+4. **Gmail** : votre boîte existante. Créez un filtre pour trier les messages du site : Gmail → barre de recherche → icône de réglages → « À : goilard.killian+vallenoire@gmail.com » → « Créer un filtre » → « Appliquer le libellé » `Campagne`.
+
+---
+
+## Étape B · La base Airtable (20 min)
+
+### B1. Créer la base et importer les modèles
+
+1. Airtable → **Create** → **Start from scratch** → nommez la base `Campagne Camille Ferrand`.
+2. Dans la base, bouton **+ Add or import** (en haut, à côté des onglets) → **CSV file** → importez `outils/airtable/benevoles.csv` (dans le dépôt GitHub : ouvrez le fichier, bouton « Download raw file »). Nommez la table **`Benevoles`**, sans accent.
+3. Recommencez avec `outils/airtable/messages.csv` → table **`Messages`**.
+4. Supprimez la table vide « Table 1 » créée au départ (clic droit sur l'onglet → Delete table).
+5. Supprimez la ligne « Exemple (à supprimer) » de chaque table.
+
+### B2. Régler le type de chaque colonne
+
+Clic sur la petite flèche à droite du nom de colonne → **Edit field** → choisissez le type.
+
+**Table `Benevoles`**
+
+| Colonne | Type Airtable | Options |
+| --- | --- | --- |
+| Prénom | Single line text | (colonne principale) |
+| Contact | Single line text | |
+| Type de contact | Single select | `email`, `telephone` |
+| Quartier | Single select | `Centre bastide`, `Les Quais`, `Les Coteaux`, `Le Pradet`, `Gare Saint-Jean`, `Hameaux viticoles` |
+| Disponibilités | Multiple select | `semaine`, `soir`, `week-end` |
+| Missions | Multiple select | `porte-a-porte`, `marche`, `distribution`, `numerique`, `reunions` |
+| Horodatage | Date | cochez « Include time », fuseau GMT |
+| Consentement | Single line text | (contiendra toujours `oui`) |
+| Version consentement | Single line text | |
+| ID envoi | Single line text | sert à éviter les doublons |
+| Statut | Single select | `Nouveau`, `Rappelé`, `Actif`, `Retiré` |
+| Référent | Single line text | rempli à la main par l'équipe |
+| Notes | Long text | |
+
+**Table `Messages`**
+
+| Colonne | Type Airtable | Options |
+| --- | --- | --- |
+| Prénom | Single line text | (colonne principale) |
+| E-mail | Email | |
+| Type | Single select | `question`, `idee`, `soutien`, `desaccord` |
+| Thème | Single select | `pouvoir_achat`, `tranquillite`, `mobilite`, `environnement`, `autre` |
+| Message | Long text | |
+| Résumé IA | Long text | |
+| Catégorie IA | Single select | `normal`, `urgent`, `a_moderer` |
+| Thème IA | Single select | mêmes options que Thème |
+| Horodatage | Date | avec l'heure |
+| ID envoi | Single line text | |
+| Statut | Single select | `À traiter`, `Répondu`, `Modéré` |
+| Réponse envoyée le | Date | |
+
+### B3. Deux vues pratiques (facultatif)
+
+- `Benevoles` → **Grid view** → « Create » → vue **À rappeler** avec un filtre `Statut = Nouveau`, triée par Horodatage.
+- `Messages` → vue **À traiter** avec un filtre `Statut = À traiter`, groupée par Thème IA.
+
+> ⚠️ Les données révèlent une opinion politique (donnée sensible, article 9 du RGPD). Ne partagez **jamais** la base en lecture publique (« Share view » avec lien public) et n'invitez que les membres de l'équipe qui en ont besoin.
+
+---
+
+## Étape C · Slack (5 min)
+
+Dans l'espace `Campagne Camille Ferrand`, créez 4 canaux (bouton **+** à côté de « Canaux ») :
+
+| Canal | Ce qui y arrive |
+| --- | --- |
+| `#benevoles` | chaque nouvelle inscription |
+| `#messages` | chaque message d'habitant, résumé par l'IA |
+| `#urgent` | les messages classés urgents |
+| `#moderation` | les messages injurieux, hors sujet ou publicitaires |
+
+Conseil RGPD : dans Slack, ne postez que le prénom, le quartier et le résumé, jamais le téléphone ni l'e-mail.
+
+---
+
+## Étape D · Scénario 1 « Formulaires du site » (30 min)
+
+### D1. Le webhook
+
+1. Make → **Scenarios** → **Create a new scenario**.
+2. Cliquez sur le gros **+** → cherchez **Webhooks** → **Custom webhook**.
+3. **Create a webhook** → nom `site-formulaires` → **Save**. Make affiche une adresse du type `https://hook.eu2.make.com/abc123…` : cliquez sur **Copy address to clipboard**.
+4. **Envoyez-moi cette adresse** : je la mets dans le site et je publie (2 minutes). Laissez Make ouvert, sur « Make is waiting for data ».
+5. Quand je vous le dis, remplissez **le formulaire bénévole** du site, puis **le formulaire question** : Make apprend tous les champs et affiche « Successfully determined ».
+
+### D2. L'aiguillage
+
+1. Après le webhook, ajoutez **Flow Control** → **Router**.
+2. Cliquez sur le trait de la **première route** → **Set up a filter** : nom `Bénévole`, condition `kind` *Equal to* `benevole`.
+3. Deuxième route : filtre `Message`, condition `kind` *Equal to* `message`.
+
+### D3. Route « Bénévole »
+
+| # | Module | Réglages |
+| --- | --- | --- |
+| 1 | **Airtable** → *Search Records* | Connexion : « Add », autorisez votre compte Airtable. Base `Campagne Camille Ferrand`, table `Benevoles`, formule : `{ID envoi} = "{{id}}"` (cliquez sur `id` dans la liste pour l'insérer) |
+| filtre | sur le trait après ce module | nom `Nouveau seulement`, condition *Total number of bundles* = `0`. Évite les doublons. |
+| 2 | **Airtable** → *Create a Record* | table `Benevoles`. Prénom = `prenom`, Contact = `contact`, Type de contact = `contact_type`, Quartier = `quartier`, Disponibilités = `{{split(disponibilites; ",")}}`, Missions = `{{split(missions; ",")}}`, Horodatage = `horodatage`, Consentement = `consentement`, Version consentement = `version_consentement`, ID envoi = `id`, Statut = `Nouveau` |
+| 3 | **Slack** → *Create a Message* | connexion à votre espace, canal `#benevoles`, texte : `🙋 Nouveau bénévole : {{prenom}} ({{quartier}}). Dispo : {{disponibilites}}. Missions : {{missions}}. Fiche dans Airtable.` |
+| 4 | **Gmail** → *Send an Email* | connexion à goilard.killian@gmail.com. À : `goilard.killian+vallenoire@gmail.com`. Objet : `Nouveau bénévole : {{prenom}}, {{quartier}}`. Contenu : prénom, contact, quartier, disponibilités, missions. |
+| filtre | avant le module 5 | condition `contact_type` *Equal to* `email` |
+| 5 | **Gmail** → *Send an Email* | À : `{{contact}}`. Objet : `Bienvenue dans l'équipe de Camille Ferrand`. Contenu : merci, un membre de l'équipe vous rappelle dans la semaine, vous pouvez retirer votre accord à tout moment en répondant à cet e-mail. |
+
+Pour un bénévole qui a laissé un **téléphone**, le message Slack suffit : le référent du quartier le rappelle.
+
+### D4. Route « Message »
+
+| # | Module | Réglages |
+| --- | --- | --- |
+| 1 | **Airtable** → *Search Records* + filtre `Total number of bundles = 0` | comme en D3, table `Messages` |
+| 2 | **Make AI Tools** → *Summarize* (ou *Ask AI*) | texte : `{{contenu}}`. Consigne : « Résume en une phrase neutre, en français, sans jugement. » |
+| 3 | **Make AI Tools** → *Categorize* (ou *Ask AI*) | texte : `{{contenu}}`. Catégories : `normal`, `urgent`, `a_moderer`. Consigne : « urgent = danger, détresse, sécurité immédiate ou journaliste pressé ; a_moderer = injurieux, menaçant, publicitaire ou hors sujet ; sinon normal. Réponds par un seul mot. » |
+| 3 bis | **Make AI Tools** → *Categorize* | seulement si `theme` est vide (filtre `theme` *Does not exist*). Catégories : `pouvoir_achat`, `tranquillite`, `mobilite`, `environnement`, `autre` |
+| 4 | **Airtable** → *Create a Record* | table `Messages`. Prénom, E-mail, Type, Thème, Message = `contenu`, Résumé IA = sortie du module 2, Catégorie IA = sortie du module 3, Thème IA = `{{ifempty(theme; sortie du 3 bis)}}`, Horodatage, ID envoi, Statut = `À traiter` |
+| 5 | **Router** avec 3 routes | voir ci-dessous |
+
+- **Route `a_moderer`** (filtre Catégorie IA = `a_moderer`) : **Slack** `#moderation` uniquement. Aucun e-mail à l'habitant.
+- **Route `urgent`** (filtre Catégorie IA = `urgent`) : **Slack** `#urgent` (`🚨 {{prenom}} · {{type}} : {{résumé}}`) puis **Gmail** à `goilard.killian+vallenoire@gmail.com`, objet `URGENT · {{type}} · {{prenom}}`, puis l'accusé de réception ci-dessous.
+- **Route normale** (clic droit sur la route → *Set as fallback route*) : **Slack** `#messages` (`✉️ {{type}} · {{thème}} · {{prenom}} : {{résumé}}`) puis l'accusé de réception.
+
+**Accusé de réception** (Gmail → *Send an Email* à `{{email}}`) : « Bonjour {{prenom}}, votre message est bien arrivé. Il a été transmis à la personne de l'équipe qui suit ce sujet : vous aurez une réponse sous 48 heures. » **L'IA trie et résume, un humain répond toujours** : c'est la promesse affichée sur le site.
+
+> Si « Make AI Tools » n'apparaît pas dans votre compte, utilisez le module **OpenAI** (ou **Anthropic Claude**) → *Create a completion* avec les mêmes consignes, ou supprimez les modules 2 et 3 : tout le reste fonctionne sans IA.
+
+### D5. Activer
+
+En bas à gauche : **Scheduling** → *Immediately as data arrives*, puis l'interrupteur **ON**. Enregistrez (icône disquette).
+
+---
+
+## Étape E · Scénario 2 « Compteur de bénévoles » (10 min)
+
+La jauge de la page « Je m'engage » demande à Make combien il y a de bénévoles. Ce scénario ne renvoie **qu'un nombre**, aucune donnée personnelle.
+
+1. **Create a new scenario** → **Webhooks** → *Custom webhook* → **Create a webhook** → nom `site-compteur` → copiez l'adresse.
+2. **Airtable** → *Search Records* : table `Benevoles`, formule `{Statut} != "Retiré"`, *Limit* : `1000`.
+3. **Tools** → *Numeric aggregator* : *Source module* = le module Airtable, fonction **COUNT**.
+4. **Webhooks** → *Webhook response* : *Status* `200`, *Body* : `{"benevoles": {{result}}}` (le résultat du module 3). Ouvrez *Show advanced settings* → *Custom headers* :
+   - `Content-Type` : `application/json`
+   - `Access-Control-Allow-Origin` : `*`
+5. **Scheduling** → *Immediately as data arrives*, interrupteur **ON**.
+6. **Envoyez-moi cette deuxième adresse**, je la mets dans le site.
+
+Pour économiser les opérations Make, le site garde le chiffre 15 minutes sur l'appareil du visiteur. Si le scénario ne répond pas, la jauge affiche la valeur de repli de `config.js` (12).
+
+---
+
+## Étape F · Me donner les 2 adresses, puis tester (15 min)
+
+1. Envoyez-moi l'adresse du **webhook `site-formulaires`** et celle du **webhook `site-compteur`**. Je les place dans `config.js` (`makeWebhook` et `compteurUrl`) et je publie.
+2. Testez depuis votre téléphone :
+   - un bénévole avec un e-mail, un bénévole avec un téléphone ;
+   - un message avec thème, un sans thème, un message injurieux (pour la modération).
+3. Vérifiez : 2 lignes dans `Benevoles`, 3 dans `Messages`, les bons canaux Slack, les bons e-mails, et la jauge de la page « Je m'engage » qui passe à 2 (après 15 minutes, ou en navigation privée).
+4. Dans Make, onglet **History** de chaque scénario : chaque exécution doit être verte.
+
+---
+
+## Ce que le site envoie (référence technique)
 
 ```
 POST <makeWebhook>
 Content-Type: application/x-www-form-urlencoded;charset=UTF-8
 ```
 
-- Le site envoie en mode `no-cors` : **il ne lit pas la réponse de Make**. Tant qu'il n'y a pas de coupure réseau, il affiche « envoyé ». Une erreur côté Make (scénario désactivé, quota épuisé) est donc invisible pour l'habitant : **surveillez l'historique du scénario** et activez les alertes d'erreur de Make (voir 7).
-- Si `makeWebhook` n'est pas renseigné dans `config.js`, ou en cas de coupure réseau, le site propose un e-mail **prérempli** vers `emailEquipe` : aucun bénévole n'est perdu.
-- Anti-spam sans service tiers : champ piège invisible `site_web` (si un robot le remplit, rien n'est envoyé) et refus d'un envoi fait moins de 3 secondes après l'affichage du formulaire.
+Le site envoie en mode `no-cors` : il ne lit pas la réponse de Make. Une erreur côté Make (scénario désactivé, quota épuisé) est donc invisible pour l'habitant : activez les alertes d'erreur (Scenario settings → *Notify on errors*). Si `makeWebhook` n'est pas renseigné ou en cas de coupure réseau, le site propose un e-mail **prérempli** vers `emailEquipe` : aucun bénévole n'est perdu. Anti-spam : champ piège invisible `site_web` et refus d'un envoi fait moins de 3 secondes après l'affichage.
 
-### Champs communs aux deux formulaires
+**Champs communs** : `kind` (`benevole` ou `message`), `id` (identifiant unique de l'envoi), `page`, `horodatage` (ISO 8601, UTC), `source` (`site`), `version_consentement`, `consentement` (`oui`).
 
-| Champ | Exemple | Rôle |
-| --- | --- | --- |
-| `kind` | `benevole` ou `message` | Aiguillage du Router |
-| `id` | `3f6c1a9e-…` | Identifiant unique : sert à éviter les doublons (clé de la ligne) |
-| `page` | `engagement.html` | Page d'origine |
-| `horodatage` | `2026-10-03T08:42:17.512Z` | Date et heure ISO 8601, en UTC |
-| `source` | `site` | Toujours `site` |
-| `version_consentement` | `2026-09` | Version du texte de consentement accepté (voir `config.js`) |
-| `consentement` | `oui` | Toujours `oui` : le formulaire ne part pas sans la case cochée |
-
-### Formulaire bénévole (`kind=benevole`)
-
-| Champ | Valeurs possibles |
+| Formulaire bénévole (`kind=benevole`) | Valeurs |
 | --- | --- |
-| `prenom` | Texte libre, 2 caractères minimum |
-| `contact` | Un e-mail **ou** un numéro de téléphone français |
-| `contact_type` | `email` ou `telephone` (calculé par le site : inutile de tester la présence de « @ ») |
+| `prenom` | texte, 2 caractères minimum |
+| `contact` | un e-mail **ou** un téléphone français |
+| `contact_type` | `email` ou `telephone` (calculé par le site) |
 | `quartier` | `Centre bastide` · `Les Quais` · `Les Coteaux` · `Le Pradet` · `Gare Saint-Jean` · `Hameaux viticoles` |
-| `disponibilites` | **Facultatif.** Zéro, un ou plusieurs parmi `semaine`, `soir`, `week-end`, joints par des virgules (vide si rien n'est coché) |
-| `missions` | **Facultatif.** Zéro, un ou plusieurs parmi `porte-a-porte`, `marche`, `distribution`, `numerique`, `reunions`, joints par des virgules (vide : le référent propose une mission) |
+| `disponibilites` | **facultatif** : `semaine`, `soir`, `week-end`, séparés par des virgules (vide si rien n'est coché) |
+| `missions` | **facultatif** : `porte-a-porte`, `marche`, `distribution`, `numerique`, `reunions`, séparés par des virgules |
 
-Exemple de corps reçu :
-
-```
-kind=benevole&id=3f6c1a9e-6d0b-4a8e-9b61-0c2f5d7e8a41&page=engagement.html&horodatage=2026-10-03T08%3A42%3A17.512Z&source=site&version_consentement=2026-09&prenom=Nadia&contact=nadia%40exemple.fr&contact_type=email&quartier=Les+Coteaux&disponibilites=soir%2Cweek-end&missions=porte-a-porte%2Cmarche&consentement=oui
-```
-
-### Formulaire message (`kind=message`)
-
-| Champ | Valeurs possibles |
+| Formulaire message (`kind=message`) | Valeurs |
 | --- | --- |
-| `prenom` | Texte libre |
-| `email` | E-mail valide |
+| `prenom` | texte |
+| `email` | e-mail valide |
 | `type` | `question` · `idee` · `soutien` · `desaccord` |
-| `theme` | `pouvoir_achat` · `tranquillite` · `mobilite` · `environnement` · `autre` · vide (l'habitant ne sait pas) |
-| `contenu` | Texte libre, 10 à 3 000 caractères |
+| `theme` | `pouvoir_achat` · `tranquillite` · `mobilite` · `environnement` · `autre` · vide |
+| `contenu` | texte, 10 à 3 000 caractères |
 
-Exemple de corps reçu :
+Exemple de corps reçu (bénévole) :
 
 ```
-kind=message&id=9b2e4c7d-1f3a-4e5b-8c6d-2a1b0f9e8d7c&page=question.html&horodatage=2026-10-05T17%3A03%3A55.020Z&source=site&version_consentement=2026-09&prenom=Paul&email=paul%40exemple.fr&type=desaccord&theme=tranquillite&contenu=Je+ne+suis+pas+d%27accord+avec+la+vid%C3%A9oprotection...&consentement=oui
+kind=benevole&id=3f6c1a9e-6d0b-4a8e-9b61-0c2f5d7e8a41&page=engagement.html&horodatage=2026-10-03T08%3A42%3A17.512Z&source=site&version_consentement=2026-09&prenom=Nadia&contact=06+12+34+56+78&contact_type=telephone&quartier=Les+Coteaux&disponibilites=soir%2Cweek-end&missions=marche&consentement=oui
 ```
 
 ---
 
-## 2. La base de données : un Google Sheets, trois onglets
+## Suppression des données après l'élection
 
-Créez un fichier **« Campagne Camille Ferrand · données »** dans le Drive de l'équipe (pas dans un Drive personnel), partagé uniquement avec les membres qui en ont besoin.
+Promesse du site : suppression **au plus tard un mois après l'élection** (avec la date actuelle : le 12 janvier 2027).
 
-**Onglet `Benevoles`** (ligne 1 = en-têtes, dans cet ordre) :
+1. Créez un scénario 3, déclenché une seule fois : **Scheduling** → *Once* → date du 12 janvier 2027.
+2. Modules : **Airtable** → *Search Records* (table `Benevoles`, sans formule) → **Airtable** → *Delete a Record* (ID = l'ID du module précédent). Même chose pour `Messages`.
+3. Ajoutez un message Slack dans `#benevoles` : « Données supprimées conformément à l'engagement RGPD ».
+4. Videz aussi l'historique des scénarios Make, le libellé `Campagne` de Gmail et les canaux Slack concernés.
 
-```
-id | horodatage | prenom | contact | contact_type | quartier | disponibilites | missions | consentement | version_consentement | statut | referent | notes
-```
-
-`statut` (`nouveau`, `rappelé`, `actif`, `retiré`), `referent` et `notes` sont remplis à la main par l'équipe.
-
-**Onglet `Messages`** :
-
-```
-id | horodatage | prenom | email | type | theme | contenu | resume_ia | categorie_ia | theme_ia | referent | statut | reponse_envoyee_le
-```
-
-**Onglet `Compteur`** : une seule cellule, **A1** :
-
-```
-=NBVAL(Benevoles!A2:A)
-```
-
-(Version anglaise de Sheets : `=COUNTA(Benevoles!A2:A)`.) Pour ne compter que les bénévoles encore engagés : `=NB.SI(Benevoles!K2:K;"<>retiré")`.
-
-### Publier le compteur (et seulement lui)
-
-1. Fichier → Partager → **Publier sur le Web**.
-2. Lien : choisir l'onglet **`Compteur`** uniquement (jamais « Document entier »), format **CSV**.
-3. Copier l'URL dans `compteurCsv` de `config.js`.
-
-Google met à jour la version publiée environ toutes les 5 minutes : le site affiche « mis à jour régulièrement », jamais « en direct ». Si la lecture échoue, le site affiche `benevolesRepli`.
-
-> ⚠️ Les onglets `Benevoles` et `Messages` contiennent des données sensibles (opinion politique, article 9 du RGPD) : **ne jamais les publier**, ne jamais partager le fichier « à toute personne disposant du lien ».
+Une demande de suppression individuelle avant cette date se traite à la main : supprimer la ligne Airtable, les messages Slack et les e-mails, puis confirmer à la personne.
 
 ---
 
-## 3. Slack : les canaux de l'équipe
+## Limites des offres gratuites (à vérifier sur les pages tarifs, elles évoluent)
 
-Créez un espace Slack pour l'équipe, avec au minimum :
-
-| Canal | Ce qui y arrive |
-| --- | --- |
-| `#benevoles` | Chaque nouvelle inscription, avec le quartier et les missions |
-| `#messages` | Chaque message d'habitant, résumé par l'IA, avec le thème |
-| `#urgent` | Les messages classés urgents par l'IA (et les désaccords, si vous le souhaitez) |
-| `#moderation` | Les messages à modérer : injurieux, hors sujet, spam. Aucune réponse automatique |
-
-Si vous préférez un canal par référent de thème (`#pouvoir-achat`, `#tranquillite`…), utilisez le filtre sur `theme_ia` (voir 4.2).
-
-Conseil RGPD : dans Slack, ne postez **que le prénom, le quartier et le résumé**, jamais le téléphone ou l'e-mail complet. Le lien vers la ligne du tableur suffit pour retrouver le contact.
-
----
-
-## 4. Le scénario Make, module par module
-
-```
-[Webhooks · Custom webhook]
-        │
-   [Router]
-   ├── Route 1 · filtre kind = benevole
-   │     ├─ Google Sheets · Search rows (id)      ← évite les doublons
-   │     ├─ Google Sheets · Add a row (Benevoles)
-   │     ├─ Slack · Create a message (#benevoles)
-   │     ├─ Gmail · Send an email (équipe)
-   │     └─ Gmail · Send an email (bienvenue)     ← filtre contact_type = email
-   │
-   └── Route 2 · filtre kind = message
-         ├─ Google Sheets · Search rows (id)
-         ├─ Make AI Toolkit · Summarize text
-         ├─ Make AI Toolkit · Categorize text (urgence)
-         ├─ Make AI Toolkit · Categorize text (thème, si theme est vide)
-         ├─ Google Sheets · Add a row (Messages)
-         └─ [Router]
-               ├─ categorie_ia = a_moderer → Slack #moderation (aucun envoi à l'habitant)
-               ├─ categorie_ia = urgent    → Slack #urgent + Gmail « URGENT » au pôle communication + accusé de réception
-               └─ sinon                    → Slack #messages + Gmail au référent du thème + accusé de réception
-```
-
-### 4.0 Le webhook
-
-1. Nouveau scénario → module **Webhooks · Custom webhook** → *Add* → nommez-le `site-camille-ferrand`.
-2. Copiez l'URL dans `makeWebhook` de `config.js`.
-3. Cliquez **Redetermine data structure**, puis envoyez **un formulaire de chaque sorte** depuis le site (bénévole puis message) : Make apprend tous les champs.
-
-### 4.1 Route bénévole (`kind` = `benevole`)
-
-| Module | Réglages |
-| --- | --- |
-| Filtre | `kind` *Equal to* `benevole` |
-| Google Sheets · Search rows | Onglet `Benevoles`, filtre `id` = `{{id}}`. Ajoutez ensuite un filtre « Total number of bundles = 0 » pour ne pas enregistrer deux fois le même envoi |
-| Google Sheets · Add a row | Onglet `Benevoles`, une colonne par champ ; `statut` = `nouveau` |
-| Slack · Create a message | Canal `#benevoles`. Texte : `🙋 Nouveau bénévole : {{prenom}} ({{quartier}}). Dispo : {{disponibilites}}. Missions : {{missions}}. Fiche : <lien du tableur>` |
-| Gmail · Send an email | À : l'équipe. Objet : `Nouveau bénévole : {{prenom}}, {{quartier}}` |
-| Gmail · Send an email | Filtre `contact_type` = `email`. À : `{{contact}}`. Objet : `Bienvenue dans l'équipe de Camille Ferrand`. Corps : remerciement, prochaine étape (« un membre de l'équipe vous rappelle dans la semaine »), rappel « vous pouvez retirer votre accord à tout moment en répondant à cet e-mail » |
-
-Pour un bénévole qui a laissé un **téléphone**, le message Slack suffit : le référent du quartier le rappelle.
-
-### 4.2 Route message (`kind` = `message`)
-
-| Module | Réglages |
-| --- | --- |
-| Filtre | `kind` *Equal to* `message` |
-| Google Sheets · Search rows | Anti-doublon sur `id`, comme ci-dessus |
-| Make AI Toolkit · Summarize text | Texte : `{{contenu}}`. Consigne : « Résume en une phrase neutre, en français, sans jugement. » → `resume_ia` |
-| Make AI Toolkit · Categorize text | Catégories : `normal`, `urgent`, `a_moderer`. Consigne : « urgent = situation de danger, détresse, problème de sécurité immédiat, ou journaliste pressé ; a_moderer = injurieux, menaçant, publicitaire, hors sujet ; sinon normal. » → `categorie_ia` |
-| Make AI Toolkit · Categorize text | Seulement si `theme` est vide. Catégories : `pouvoir_achat`, `tranquillite`, `mobilite`, `environnement`, `autre` → `theme_ia` (sinon `theme_ia` = `theme`) |
-| Google Sheets · Add a row | Onglet `Messages` ; `statut` = `à traiter` |
-| Router | 3 routes ci-dessous |
-
-**Route `a_moderer`** : Slack `#moderation` uniquement. Pas d'accusé de réception.
-
-**Route `urgent`** : Slack `#urgent` (`🚨 {{prenom}} · {{type}} · {{resume_ia}}`) + Gmail au pôle communication, objet `URGENT · {{type}} · {{prenom}}` + accusé de réception à l'habitant.
-
-**Route normale** (filtre de repli, *fallback*) : Slack `#messages` (`✉️ {{type}} · {{theme_ia}} · {{prenom}} : {{resume_ia}}`) + Gmail au référent du thème (tableau de correspondance ci-dessous) + accusé de réception.
-
-| `theme_ia` | Référent (à compléter) |
-| --- | --- |
-| `pouvoir_achat` | `[EMAIL_REFERENT_POUVOIR_ACHAT]` |
-| `tranquillite` | `[EMAIL_REFERENT_TRANQUILLITE]` |
-| `mobilite` | `[EMAIL_REFERENT_MOBILITE]` |
-| `environnement` | `[EMAIL_REFERENT_ENVIRONNEMENT]` |
-| `autre` | `[EMAIL_EQUIPE]` |
-
-Astuce : faites la correspondance avec la fonction `switch()` de Make dans le champ « À ».
-
-**Accusé de réception** (Gmail · Send an email à `{{email}}`) : « Bonjour {{prenom}}, votre message est bien arrivé. Il a été transmis à la personne de l'équipe qui suit ce sujet : vous aurez une réponse sous 48 heures. » **L'IA trie et résume, un humain répond toujours** : c'est la promesse affichée sur le site.
-
----
-
-## 5. Suppression des données après l'élection
-
-Promesse du site : suppression **au plus tard un mois après l'élection**.
-
-1. Créez un second scénario **planifié une seule fois** (*Schedule* → *Once*), à la date `dateScrutin + 30 jours` (avec la date actuelle de `config.js` : le 12 janvier 2027).
-2. Modules : Google Sheets · *Clear values* sur `Benevoles!A2:M` et `Messages!A2:M`, puis Slack · *Create a message* dans `#benevoles` : « Données supprimées conformément à l'engagement RGPD ».
-3. Pensez aussi à vider l'historique des exécutions Make (Scenario → History), la boîte Gmail de l'équipe et les canaux Slack concernés.
-
-Une demande de suppression individuelle avant cette date se traite à la main : supprimer la ligne, les messages Slack et les e-mails concernés, puis confirmer à la personne.
-
----
-
-## 6. Tester avant la mise en ligne
-
-1. Renseignez `makeWebhook` et `compteurCsv` dans `config.js`.
-2. Envoyez un bénévole avec un e-mail, un bénévole avec un téléphone, un message avec thème, un message sans thème, un message injurieux (pour la modération).
-3. Vérifiez : 5 lignes dans le tableur, les bons canaux Slack, les bons e-mails, rien dans `#benevoles` pour les messages.
-4. Attendez 5 minutes, rechargez `engagement.html` : la jauge doit avoir bougé.
-5. Test de coupure : mettez une adresse fausse dans `makeWebhook`, envoyez : le site doit proposer l'e-mail prérempli.
-
-Pour tester sans Make, un petit serveur local qui affiche le corps reçu suffit (voir la section « Tester en local » du README).
-
----
-
-## 7. Surveillance et limites
-
-- Activez dans Make **les notifications d'erreur** du scénario (Scenario settings → *Notify on errors*) vers l'e-mail de l'équipe.
-- Plan gratuit de Make : nombre d'opérations mensuel limité (voir la page tarifs de Make, les conditions changent). Chaque envoi consomme une opération par module traversé : comptez 6 à 10 opérations par formulaire.
-- L'IA de Make est soumise à un quota de jetons : les messages très longs sont tronqués à 3 000 caractères par le site.
-- Aucun champ du site n'est obligatoire côté Make hormis `kind` : si vous ajoutez un champ au formulaire, relancez **Redetermine data structure**.
+- **Make** : environ 1 000 opérations par mois. Un formulaire en consomme 6 à 10, une lecture du compteur 3. Largement assez pour la démonstration.
+- **Airtable** : 1 000 lignes par base.
+- **Slack** : historique des messages limité dans le temps.

@@ -510,6 +510,7 @@ body.page .texte-long > * { min-width: 0; }
 body.page .texte-long h2 { font-weight: 800; font-stretch: 86%; font-size: clamp(1.625rem, 3vw, 2.125rem); line-height: 1.12; margin-top: 1.75rem; }
 body.page .texte-long h3 { font-weight: 700; font-size: 1.3125rem; margin-top: .5rem; }
 body.page .texte-long ul, body.page .texte-long ol { padding-left: 1.5rem; display: grid; gap: .5rem; }
+body.page a[href^="mailto:"] { overflow-wrap: anywhere; }
 body.page .placeholder { font-family: ui-monospace, Menlo, monospace; font-size: .92em; background: #FFF1B8; padding: 0 .25rem; border-radius: 4px; overflow-wrap: anywhere; }
 
 /* Facile à lire */
@@ -671,3 +672,64 @@ body.page .conteneur.texte-long { max-width: var(--largeur); }
 body.page .conteneur.texte-long > * { max-width: 68ch; }
 body.page .texte-long > h2:first-child { margin-top: 0; }
 body.page .fictif, body.page .texte-heros > .ecouter { justify-self: start; }
+
+/* ═══════════ ANIMATIONS « SYMPAS » ═══════════
+   Toutes partent d'un état visible (fill-mode both + keyframes « from ») :
+   si les animations sont coupées, le contenu reste affiché normalement. */
+@keyframes cf-monte { from { opacity: 0; transform: translateY(.55em) rotate(1.5deg); } }
+@keyframes cf-fondu-haut { from { opacity: 0; transform: translateY(1.25rem); } }
+@keyframes cf-pose { from { opacity: 0; transform: scale(1.06) translateY(1rem); } }
+@keyframes cf-trait { from { transform: scaleX(0); } }
+@keyframes cf-pop { 0% { transform: scale(.6); opacity: 0; } 70% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
+
+/* Titre principal : les mots montent un à un */
+html.js body.page .mot-h { display: inline-block; animation: cf-monte .85s var(--ease) both; animation-delay: calc(var(--i, 0) * 55ms + 80ms); }
+/* Le reste du haut de page arrive juste après */
+html.js body.page .heros .texte-heros > :not(h1),
+html.js body.page .heros-seul .texte-heros > :not(h1) { animation: cf-fondu-haut .8s var(--ease) both; animation-delay: .5s; }
+html.js body.page .texte-heros > :nth-child(3) { animation-delay: .6s; }
+html.js body.page .texte-heros > :nth-child(4) { animation-delay: .7s; }
+html.js body.page .texte-heros > :nth-child(n+5) { animation-delay: .8s; }
+html.js body.page .heros-visuel img { animation: cf-pose 1.3s var(--ease) both; animation-delay: .25s; }
+html.js body.page .heros-visuel .pastille { animation: cf-pop .6s var(--ease) both; animation-delay: 1.2s; }
+html.js body.page .surtitre::before { animation: cf-trait .7s var(--ease) both; transform-origin: left; }
+
+/* Apparitions en cascade (délai selon la position dans la liste) */
+html.js body.page .apparait { transition-delay: calc(var(--i, 0) * 90ms); }
+
+/* Surligneur qui se dessine */
+html.js body.page .souligne { background: linear-gradient(#C9D5F7, #C9D5F7) no-repeat 0 85% / 0% 40%; transition: background-size 1.1s var(--ease) .3s; }
+html.js body.page .souligne.vu { background-size: 100% 40%; }
+
+/* Barre de progression de lecture */
+body.page .progression { position: fixed; top: 0; left: 0; right: 0; height: 4px; z-index: 120; background: var(--bleu); transform-origin: left; transform: scaleX(0); pointer-events: none; }
+
+/* Petites réactions au survol et au clic */
+body.page .btn:active { transform: translateY(1px) scale(.98); }
+body.page .pilier-carte img, body.page .carte-image img { transition: transform .8s var(--ease); }
+body.page .pilier-carte:hover img { transform: scale(1.04); }
+body.page .etape::before { transition: transform .4s var(--ease); display: inline-block; transform-origin: left bottom; }
+body.page .etape:hover::before { transform: scale(1.12) rotate(-3deg); }
+body.page .picto { transition: transform .4s var(--ease); }
+body.page .carte:hover .picto { transform: translateY(-3px) rotate(-6deg); }
+body.page .zone .forme { transition: fill .25s, transform .3s var(--ease); transform-box: fill-box; transform-origin: center; }
+body.page .zone:hover .forme { transform: scale(1.02); }
+body.page .devise .mot { transition: transform .5s var(--ease); display: inline-block; }
+body.page .devise li:hover .mot { transform: translateX(.5rem); }
+body.page .rdv { transition: transform .3s var(--ease), box-shadow .3s; }
+body.page .rdv:hover { transform: translateX(4px); }
+
+/* Confettis de réussite (formulaires) */
+body.page .confettis { position: fixed; inset: 0; z-index: 150; pointer-events: none; }
+
+/* Animations coupées : réglage du site ou préférence du système */
+@media (prefers-reduced-motion: reduce) {
+  html.js body.page .mot-h, html.js body.page .texte-heros > *, html.js body.page .heros-visuel img, html.js body.page .pastille, html.js body.page .surtitre::before { animation: none !important; }
+  html.js body.page .souligne { background-size: 100% 40%; }
+  body.page .progression, body.page .confettis { display: none; }
+}
+html.sans-animation.js body.page .mot-h, html.sans-animation.js body.page .texte-heros > *, html.sans-animation.js body.page .heros-visuel img,
+html.sans-animation.js body.page .pastille, html.sans-animation.js body.page .surtitre::before { animation: none !important; }
+html.sans-animation.js body.page .souligne { background-size: 100% 40%; }
+html.sans-animation body.page .progression, html.sans-animation body.page .confettis { display: none; }
+@media print { body.page .progression, body.page .confettis { display: none; } }

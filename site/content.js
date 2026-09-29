@@ -19,8 +19,8 @@ window.SITE_CONTENT = {
     copyright: '© 2026 · VALLENOIRE, VALLÉE DE LA GARONNE',
     signature: 'PROJET ÉTUDIANT · CANDIDATE ET VILLE FICTIVES',
     socials: [
-      { label: 'FACEBOOK ↗', url: '[URL_FACEBOOK]' },
-      { label: 'INSTAGRAM ↗', url: '[URL_INSTAGRAM]' }
+      { label: 'FACEBOOK ↗', url: 'https://www.facebook.com/camilleferrand.vallenoire' },
+      { label: 'INSTAGRAM ↗', url: 'https://www.instagram.com/camille.ferrand.vallenoire' }
     ]
   },
 
@@ -106,7 +106,7 @@ window.SITE_CONTENT = {
 
   contact: {
     kicker: 'UNE QUESTION, UNE IDÉE ?',
-    email: '[EMAIL_EQUIPE]',
+    email: 'goilard.killian+vallenoire@gmail.com',
     reassurance: 'RÉPONSE SOUS 48 H · CHAQUE MESSAGE EST LU PAR L’ÉQUIPE'
   },
 

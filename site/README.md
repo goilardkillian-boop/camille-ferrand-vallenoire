@@ -40,7 +40,7 @@ Attention : les pages HTML de `site/` sont **produites** par `outils/construire.
 
 Cherchez les crochets `[` :
 
-- `config.js` : `[EMAIL_EQUIPE]`, `[EMAIL_PRESSE]`, `[TELEPHONE_PRESSE]` (facultatif), `[URL_WEBHOOK_MAKE]`, `[URL_CSV_ONGLET_COMPTEUR]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` ;
+- `config.js` : `[TELEPHONE_PRESSE]` (facultatif), `[URL_WEBHOOK_MAKE]`, `[URL_WEBHOOK_COMPTEUR]` (webhook Make du scénario 2, qui compte les bénévoles dans Airtable) ;
 - `content.js` et `experience.html` : `[EMAIL_EQUIPE]`, `[URL_FACEBOOK]`, `[URL_INSTAGRAM]` (mêmes valeurs) ;
 - `outils/gabarits/mentions-legales.html` : éditeur, directeur de la publication, école, crédit du portrait ;
 - `outils/gabarits/donnees.html` : responsable du traitement ;
