@@ -21,7 +21,7 @@ window.CAMPAGNE = {
   urlSite: 'https://goilardkillian-boop.github.io/camille-ferrand-vallenoire',
 
   /* ─── Make (voir MAKE-SETUP.md) ─── */
-  makeWebhook: '[URL_WEBHOOK_MAKE]',          // scénario 1 : un seul webhook, le champ "kind" route les envois
+  makeWebhook: 'https://hook.eu1.make.com/23jhshl7klwnyv1ikd76tt3l4gigk6r0',          // scénario 1 : un seul webhook, le champ "kind" route les envois
   /* Scénario 2 : adresse qui renvoie le nombre de bénévoles (texte ou JSON,
      par exemple {"benevoles": 17}). Aucune donnée personnelle. */
   compteurUrl: '[URL_WEBHOOK_COMPTEUR]',
