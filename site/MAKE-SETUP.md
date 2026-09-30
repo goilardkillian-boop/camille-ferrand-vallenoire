@@ -68,8 +68,8 @@ Clic sur la petite flèche à droite du nom de colonne → **Edit field** → ch
 | Thème | Single select | `pouvoir_achat`, `tranquillite`, `mobilite`, `environnement`, `autre` |
 | Message | Long text | |
 | Résumé IA | Long text | |
-| Catégorie IA | Single select | `normal`, `urgent`, `a_moderer` |
-| Thème IA | Single select | mêmes options que Thème |
+| Catégorie IA | Single line text | l'IA peut renvoyer une variante (majuscule, accent) : un texte libre évite l'erreur Airtable « Cannot parse value » |
+| Thème IA | Single line text | même raison |
 | Horodatage | Date | avec l'heure |
 | ID envoi | Single line text | |
 | Statut | Single select | `À traiter`, `Répondu`, `Modéré` |
