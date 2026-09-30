@@ -36,6 +36,8 @@ Durée totale : environ 1 h 30 la première fois. Tout est gratuit.
 
 ### B2. Régler le type de chaque colonne
 
+À l'import, Airtable devine les types et se trompe souvent. Vérifiez chaque colonne : **seule `Horodatage` (et `Réponse envoyée le`) doit être de type Date**. Une colonne `Version consentement` en Date provoque l'erreur Make « Invalid date in parameter ».
+
 Clic sur la petite flèche à droite du nom de colonne → **Edit field** → choisissez le type.
 
 **Table `Benevoles`**
@@ -66,8 +68,8 @@ Clic sur la petite flèche à droite du nom de colonne → **Edit field** → ch
 | Thème | Single select | `pouvoir_achat`, `tranquillite`, `mobilite`, `environnement`, `autre` |
 | Message | Long text | |
 | Résumé IA | Long text | |
-| Catégorie IA | Single select | `normal`, `urgent`, `a_moderer` |
-| Thème IA | Single select | mêmes options que Thème |
+| Catégorie IA | Single line text | l'IA peut renvoyer une variante (majuscule, accent) : un texte libre évite l'erreur Airtable « Cannot parse value » |
+| Thème IA | Single line text | même raison |
 | Horodatage | Date | avec l'heure |
 | ID envoi | Single line text | |
 | Statut | Single select | `À traiter`, `Répondu`, `Modéré` |
@@ -115,15 +117,15 @@ Conseil RGPD : dans Slack, ne postez que le prénom, le quartier et le résumé,
 
 ### D3. Route « Bénévole »
 
+Pas de module *Search Records* pour détecter les doublons : quand la recherche ne trouve rien, Make s'arrête et la ligne n'est jamais créée. Le site n'envoie qu'une fois par formulaire, les doublons restent rares et se suppriment à la main.
+
 | # | Module | Réglages |
 | --- | --- | --- |
-| 1 | **Airtable** → *Search Records* | Connexion : « Add », autorisez votre compte Airtable. Base `Campagne Camille Ferrand`, table `Benevoles`, formule : `{ID envoi} = "{{id}}"` (cliquez sur `id` dans la liste pour l'insérer) |
-| filtre | sur le trait après ce module | nom `Nouveau seulement`, condition *Total number of bundles* = `0`. Évite les doublons. |
-| 2 | **Airtable** → *Create a Record* | table `Benevoles`. Prénom = `prenom`, Contact = `contact`, Type de contact = `contact_type`, Quartier = `quartier`, Disponibilités = `{{split(disponibilites; ",")}}`, Missions = `{{split(missions; ",")}}`, Horodatage = `horodatage`, Consentement = `consentement`, Version consentement = `version_consentement`, ID envoi = `id`, Statut = `Nouveau` |
-| 3 | **Slack** → *Create a Message* | connexion à votre espace, canal `#benevoles`, texte : `🙋 Nouveau bénévole : {{prenom}} ({{quartier}}). Dispo : {{disponibilites}}. Missions : {{missions}}. Fiche dans Airtable.` |
-| 4 | **Gmail** → *Send an Email* | connexion à goilard.killian@gmail.com. À : `goilard.killian+vallenoire@gmail.com`. Objet : `Nouveau bénévole : {{prenom}}, {{quartier}}`. Contenu : prénom, contact, quartier, disponibilités, missions. |
-| filtre | avant le module 5 | condition `contact_type` *Equal to* `email` |
-| 5 | **Gmail** → *Send an Email* | À : `{{contact}}`. Objet : `Bienvenue dans l'équipe de Camille Ferrand`. Contenu : merci, un membre de l'équipe vous rappelle dans la semaine, vous pouvez retirer votre accord à tout moment en répondant à cet e-mail. |
+| 1 | **Airtable** → *Create a Record* | Connexion : « Add », autorisez votre compte Airtable. Base `Campagne Camille Ferrand`, table `Benevoles`. Prénom = `prenom`, Contact = `contact`, Type de contact = `contact_type`, Quartier = `quartier`, Disponibilités = `{{if(disponibilites; split(disponibilites; ","); emptyarray)}}`, Missions = `{{if(missions; split(missions; ","); emptyarray)}}` (activez l'interrupteur **Map** de ces deux champs), Horodatage = `horodatage`, Consentement = `consentement`, Version consentement = `version_consentement`, ID envoi = `id`, Statut = `Nouveau` |
+| 2 | **Slack** → *Create a Message* | connexion à votre espace, canal `#benevoles`, texte : `🙋 Nouveau bénévole : {{prenom}} ({{quartier}}). Dispo : {{disponibilites}}. Missions : {{missions}}. Fiche dans Airtable.` |
+| 3 | **Gmail** → *Send an Email* | connexion à goilard.killian@gmail.com. À : `goilard.killian+vallenoire@gmail.com`. Objet : `Nouveau bénévole : {{prenom}}, {{quartier}}`. Contenu : prénom, contact, quartier, disponibilités, missions. |
+| filtre | avant le module 4 | condition `contact_type` *Equal to* `email` |
+| 4 | **Gmail** → *Send an Email* | À : `{{contact}}`. Objet : `Bienvenue dans l'équipe de Camille Ferrand`. Contenu : merci, un membre de l'équipe vous rappelle dans la semaine, vous pouvez retirer votre accord à tout moment en répondant à cet e-mail. |
 
 Pour un bénévole qui a laissé un **téléphone**, le message Slack suffit : le référent du quartier le rappelle.
 
@@ -131,12 +133,11 @@ Pour un bénévole qui a laissé un **téléphone**, le message Slack suffit : l
 
 | # | Module | Réglages |
 | --- | --- | --- |
-| 1 | **Airtable** → *Search Records* + filtre `Total number of bundles = 0` | comme en D3, table `Messages` |
-| 2 | **Make AI Tools** → *Summarize* (ou *Ask AI*) | texte : `{{contenu}}`. Consigne : « Résume en une phrase neutre, en français, sans jugement. » |
-| 3 | **Make AI Tools** → *Categorize* (ou *Ask AI*) | texte : `{{contenu}}`. Catégories : `normal`, `urgent`, `a_moderer`. Consigne : « urgent = danger, détresse, sécurité immédiate ou journaliste pressé ; a_moderer = injurieux, menaçant, publicitaire ou hors sujet ; sinon normal. Réponds par un seul mot. » |
-| 3 bis | **Make AI Tools** → *Categorize* | seulement si `theme` est vide (filtre `theme` *Does not exist*). Catégories : `pouvoir_achat`, `tranquillite`, `mobilite`, `environnement`, `autre` |
-| 4 | **Airtable** → *Create a Record* | table `Messages`. Prénom, E-mail, Type, Thème, Message = `contenu`, Résumé IA = sortie du module 2, Catégorie IA = sortie du module 3, Thème IA = `{{ifempty(theme; sortie du 3 bis)}}`, Horodatage, ID envoi, Statut = `À traiter` |
-| 5 | **Router** avec 3 routes | voir ci-dessous |
+| 1 | **Make AI Tools** → *Summarize* (ou *Ask AI*) | texte : `{{contenu}}`. Consigne : « Résume en une phrase neutre, en français, sans jugement. » |
+| 2 | **Make AI Tools** → *Categorize* (ou *Ask AI*) | texte : `{{contenu}}`. Catégories : `normal`, `urgent`, `a_moderer`. Consigne : « urgent = danger, détresse, sécurité immédiate ou journaliste pressé ; a_moderer = injurieux, menaçant, publicitaire ou hors sujet ; sinon normal. Réponds par un seul mot. » |
+| 2 bis | **Make AI Tools** → *Categorize* | sans filtre (un filtre ici arrêterait la suite du parcours quand le thème est rempli). Catégories : `pouvoir_achat`, `tranquillite`, `mobilite`, `environnement`, `autre` |
+| 3 | **Airtable** → *Create a Record* | table `Messages`. Prénom, E-mail, Type, Thème, Message = `contenu`, Résumé IA = sortie du module 1, Catégorie IA = sortie du module 2, Thème IA = `{{ifempty(theme; sortie du 2 bis)}}`, Horodatage, ID envoi, Statut = `À traiter` |
+| 4 | **Router** avec 3 routes | voir ci-dessous |
 
 - **Route `a_moderer`** (filtre Catégorie IA = `a_moderer`) : **Slack** `#moderation` uniquement. Aucun e-mail à l'habitant.
 - **Route `urgent`** (filtre Catégorie IA = `urgent`) : **Slack** `#urgent` (`🚨 {{prenom}} · {{type}} : {{résumé}}`) puis **Gmail** à `goilard.killian+vallenoire@gmail.com`, objet `URGENT · {{type}} · {{prenom}}`, puis l'accusé de réception ci-dessous.
@@ -144,7 +145,7 @@ Pour un bénévole qui a laissé un **téléphone**, le message Slack suffit : l
 
 **Accusé de réception** (Gmail → *Send an Email* à `{{email}}`) : « Bonjour {{prenom}}, votre message est bien arrivé. Il a été transmis à la personne de l'équipe qui suit ce sujet : vous aurez une réponse sous 48 heures. » **L'IA trie et résume, un humain répond toujours** : c'est la promesse affichée sur le site.
 
-> Si « Make AI Tools » n'apparaît pas dans votre compte, utilisez le module **OpenAI** (ou **Anthropic Claude**) → *Create a completion* avec les mêmes consignes, ou supprimez les modules 2 et 3 : tout le reste fonctionne sans IA.
+> Si « Make AI Tools » n'apparaît pas dans votre compte, utilisez le module **OpenAI** (ou **Anthropic Claude**) → *Create a completion* avec les mêmes consignes, ou supprimez les modules 1, 2 et 2 bis : tout le reste fonctionne sans IA.
 
 ### D5. Activer
 
