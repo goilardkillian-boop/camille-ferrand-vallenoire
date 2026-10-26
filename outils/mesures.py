@@ -50,8 +50,72 @@ def html():
           <ul class="mesures" role="list">''')
         for n, t, b, pub, lev, hor, prof in ms:
             out.append(f'''            <li><details class="pliable mesure" id="mesure-{n}" data-pilier="{pid}" data-profils="{prof}">
-              <summary><span class="num" aria-hidden="true">{n:02d}</span><span><span class="sr-only">Mesure {n} : </span><span class="titre-mesure">{t}</span><span class="benefice">{b}</span></span></summary>
+              <summary><span class="num" aria-hidden="true">{n}</span><span><span class="sr-only">Mesure {n} : </span><span class="titre-mesure">{t}</span><span class="benefice">{b}</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>{pub}</dd><dt>Levier de la mairie</dt><dd>{lev}</dd><dt>Quand</dt><dd>{hor}</dd></dl></div>
             </details></li>''')
         out.append('          </ul>\n        </section>')
+    return '\n'.join(out)
+
+
+# ─── Quartiers (section 11 du brief) : l'élément interactif de l'accueil ───
+QUARTIERS = [
+    ('centre', 'Centre bastide', 'Surtout des 60 ans et plus, des commerçants',
+     'Des commerces vides, des trottoirs étroits, un centre calme le soir', [7, 9, 13, 18]),
+    ('quais', 'Les Quais', 'Retraités et jeunes couples', 'L’éclairage des berges, le stationnement', [13, 11, 21]),
+    ('coteaux', 'Les Coteaux', 'Familles de 41 à 60 ans, maisons individuelles',
+     'La taxe foncière, la cantine, les trajets', [1, 2, 4, 16]),
+    ('pradet', 'Le Pradet', 'Revenus modestes, familles, jeunes', 'Le pouvoir d’achat, des bus trop rares', [2, 5, 6, 20, 10]),
+    ('gare', 'Gare Saint-Jean', 'Actifs de 26 à 40 ans', 'Une gare peu fréquentée le soir, des parkings à vélos', [9, 13, 21]),
+    ('hameaux', 'Hameaux viticoles', 'Agriculteurs, retraités isolés', 'L’isolement, le transport', [19, 3, 5]),
+]
+
+
+def _mesure(n):
+    for _, _, _, ms in PILIERS:
+        for m in ms:
+            if m[0] == n:
+                return m
+    raise KeyError(n)
+
+
+def quartiers_html():
+    """Un panneau par quartier. Sans JavaScript, tous restent visibles l'un sous l'autre."""
+    options = ''.join(f'<option value="{qid}">{nom}</option>' for qid, nom, *_ in QUARTIERS)
+    panneaux = []
+    for qid, nom, profil, enjeux, ms in QUARTIERS:
+        items = ''.join(
+            f'<li><a href="programme.html#mesure-{n}">{_mesure(n)[1]}</a><span>{_mesure(n)[5]}</span></li>' for n in ms)
+        panneaux.append(f'''            <div class="q-panneau" data-q="{qid}" id="q-{qid}">
+              <h3>{nom}</h3>
+              <p>{enjeux}.</p>
+              <ul class="q-mesures" role="list">{items}</ul>
+            </div>''')
+    return f'''<label class="q-label" for="choix-quartier">Votre quartier</label>
+            <select id="choix-quartier" data-choix-quartier aria-controls="q-panneaux">{options}</select>
+            <div class="q-panneaux" id="q-panneaux" aria-live="polite">
+{chr(10).join(panneaux)}
+            </div>'''
+
+
+# ─── Le mandat dans l'ordre : chaque moment et ce qui sera fait (accueil) ───
+MOMENTS = [
+    ('Dès le premier budget', [1, 7], 'detail-7.jpg', 'Un étal de légumes au marché'),
+    ('Dans les six premiers mois', [11, 12, 5], 'detail-1.jpg', 'Des arcades en pierre au soleil'),
+    ('À la première rentrée', [2, 15], 'detail-2.jpg', 'Des volets bleus sur une façade claire'),
+    ('Au cours de la première année', [3, 4, 9, 19], 'detail-4.jpg', 'Un lampadaire ancien dans une rue'),
+    ('Chaque année', [23], 'detail-3.jpg', 'Un marché de rue animé'),
+    ('À mi-mandat', [24], 'detail-10.jpg', 'Un volet bleu entrouvert'),
+    ('Tout au long du mandat', [8, 13, 16, 22], 'detail-8.jpg', 'Des pains posés sur un étal'),
+]
+
+
+def moments_html():
+    out = []
+    for quand, ms, img, alt in MOMENTS:
+        items = ''.join(f'<li>{_mesure(n)[1]}</li>' for n in ms)
+        out.append(f'''          <li class="moment">
+            <h3>{quand}</h3>
+            <ul role="list">{items}</ul>
+            <img src="images/{img}" alt="{alt}" width="480" height="600" loading="lazy" decoding="async">
+          </li>''')
     return '\n'.join(out)

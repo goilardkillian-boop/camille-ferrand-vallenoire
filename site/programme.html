@@ -23,9 +23,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Camille Ferrand, sur fond bleu, avec le slogan : Vallenoire, le quotidien d’une ville qui nous facilite la vie">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&amp;display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     /* Préférences d'affichage appliquées avant l'affichage (voir campagne.js) */
     (function (r) {
@@ -39,7 +37,7 @@
       } catch (e) {}
     })(document.documentElement);
   </script>
-  <link rel="stylesheet" href="campagne.css?v=c893ca74b6">
+  <link rel="stylesheet" href="campagne.css?v=c600cd6dd1">
   <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Camille Ferrand · Vallenoire", "url": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/", "inLanguage": "fr-FR", "description": "Site de campagne municipale fictif, réalisé dans le cadre d’un projet étudiant."}, {"@context": "https://schema.org", "@type": "Person", "name": "Camille Ferrand", "description": "Candidate fictive aux élections municipales de Vallenoire (ville fictive), projet étudiant.", "image": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/images/camille-ferrand.jpg", "url": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/"}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/"}, {"@type": "ListItem", "position": 2, "name": "Programme", "item": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/programme.html"}]}]</script>
 </head>
 <body class="page">
@@ -105,7 +103,6 @@
     <section class="heros" aria-labelledby="titre-page">
       <div class="conteneur heros-grille">
         <div class="texte-heros">
-          <p class="surtitre">Le programme</p>
           <h1 class="affiche" id="titre-page">Vivre mieux à Vallenoire, sans dépenser plus.</h1>
           <p class="chapo">Des factures allégées, une ville plus apaisée, des trajets plus simples. Chaque mesure dit pour qui, avec quel levier de la mairie et pour quand : vous pourrez tout vérifier.</p>
           <ul class="chiffres" role="list">
@@ -135,7 +132,6 @@
     <section class="section fond-blanc" id="mesures" aria-labelledby="titre-mesures">
       <div class="conteneur">
         <div class="entete-section">
-          <p class="surtitre">Les 24 mesures</p>
           <h2 class="titre" id="titre-mesures">Trouvez ce qui change pour vous</h2>
           <p class="chapo">Choisissez un thème ou votre situation : les mesures qui vous concernent sont mises en avant. Ouvrez une mesure pour voir le détail.</p>
         </div>
@@ -173,35 +169,35 @@
           </div>
           <ul class="mesures" role="list">
             <li><details class="pliable mesure" id="mesure-1" data-pilier="pouvoir-achat" data-profils="proprietaire">
-              <summary><span class="num" aria-hidden="true">01</span><span><span class="sr-only">Mesure 1 : </span><span class="titre-mesure">Taxe foncière : taux communal gelé</span><span class="benefice">Aucune hausse du taux communal pendant tout le mandat.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">1</span><span><span class="sr-only">Mesure 1 : </span><span class="titre-mesure">Taxe foncière : taux communal gelé</span><span class="benefice">Aucune hausse du taux communal pendant tout le mandat.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Propriétaires</dd><dt>Levier de la mairie</dt><dd>Vote annuel des taux</dd><dt>Quand</dt><dd>Dès le premier budget</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-2" data-pilier="pouvoir-achat" data-profils="parent">
-              <summary><span class="num" aria-hidden="true">02</span><span><span class="sr-only">Mesure 2 : </span><span class="titre-mesure">Cantine et périscolaire au quotient familial</span><span class="benefice">Chaque famille paie selon ses revenus, avec un tarif plancher pour les plus petits budgets.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">2</span><span><span class="sr-only">Mesure 2 : </span><span class="titre-mesure">Cantine et périscolaire au quotient familial</span><span class="benefice">Chaque famille paie selon ses revenus, avec un tarif plancher pour les plus petits budgets.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Familles</dd><dt>Levier de la mairie</dt><dd>Tarifs communaux</dd><dt>Quand</dt><dd>Rentrée suivant l’élection</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-3" data-pilier="pouvoir-achat" data-profils="senior">
-              <summary><span class="num" aria-hidden="true">03</span><span><span class="sr-only">Mesure 3 : </span><span class="titre-mesure">Une mutuelle communale négociée</span><span class="benefice">Une complémentaire santé moins chère, négociée pour tous les habitants qui le souhaitent.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">3</span><span><span class="sr-only">Mesure 3 : </span><span class="titre-mesure">Une mutuelle communale négociée</span><span class="benefice">Une complémentaire santé moins chère, négociée pour tous les habitants qui le souhaitent.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Seniors, petits revenus</dd><dt>Levier de la mairie</dt><dd>Convention avec le CCAS</dd><dt>Quand</dt><dd>Première année</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-4" data-pilier="pouvoir-achat" data-profils="parent senior jeune commercant proprietaire">
-              <summary><span class="num" aria-hidden="true">04</span><span><span class="sr-only">Mesure 4 : </span><span class="titre-mesure">Achat groupé d’électricité et de gaz</span><span class="benefice">Tous les foyers peuvent payer leur énergie moins cher, sans engagement.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">4</span><span><span class="sr-only">Mesure 4 : </span><span class="titre-mesure">Achat groupé d’électricité et de gaz</span><span class="benefice">Tous les foyers peuvent payer leur énergie moins cher, sans engagement.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Tous les habitants</dd><dt>Levier de la mairie</dt><dd>Organisation communale</dd><dt>Quand</dt><dd>Première année</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-5" data-pilier="pouvoir-achat" data-profils="senior parent">
-              <summary><span class="num" aria-hidden="true">05</span><span><span class="sr-only">Mesure 5 : </span><span class="titre-mesure">Guichet « Toutes vos aides »</span><span class="benefice">Un seul endroit, en mairie et en permanence de quartier, pour connaître et obtenir les aides auxquelles vous avez droit.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">5</span><span><span class="sr-only">Mesure 5 : </span><span class="titre-mesure">Guichet « Toutes vos aides »</span><span class="benefice">Un seul endroit, en mairie et en permanence de quartier, pour connaître et obtenir les aides auxquelles vous avez droit.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Seniors, familles</dd><dt>Levier de la mairie</dt><dd>CCAS</dd><dt>Quand</dt><dd>Six premiers mois</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-6" data-pilier="pouvoir-achat" data-profils="jeune">
-              <summary><span class="num" aria-hidden="true">06</span><span><span class="sr-only">Mesure 6 : </span><span class="titre-mesure">Pass jeunes sport et culture</span><span class="benefice">Un coup de pouce pour les 16 à 25 ans : club, cinéma, conservatoire, médiathèque.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">6</span><span><span class="sr-only">Mesure 6 : </span><span class="titre-mesure">Pass jeunes sport et culture</span><span class="benefice">Un coup de pouce pour les 16 à 25 ans : club, cinéma, conservatoire, médiathèque.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Jeunes de 16 à 25 ans</dd><dt>Levier de la mairie</dt><dd>Budget communal</dd><dt>Quand</dt><dd>Première année</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-7" data-pilier="pouvoir-achat" data-profils="commercant senior">
-              <summary><span class="num" aria-hidden="true">07</span><span><span class="sr-only">Mesure 7 : </span><span class="titre-mesure">Stationnement gratuit 1 heure en centre-ville</span><span class="benefice">Faire ses courses sous les arcades sans payer la première heure.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">7</span><span><span class="sr-only">Mesure 7 : </span><span class="titre-mesure">Stationnement gratuit 1 heure en centre-ville</span><span class="benefice">Faire ses courses sous les arcades sans payer la première heure.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Commerçants, seniors</dd><dt>Levier de la mairie</dt><dd>Tarifs de stationnement</dd><dt>Quand</dt><dd>Dès le premier budget</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-8" data-pilier="pouvoir-achat" data-profils="parent senior jeune commercant proprietaire">
-              <summary><span class="num" aria-hidden="true">08</span><span><span class="sr-only">Mesure 8 : </span><span class="titre-mesure">Rénovation énergétique des bâtiments communaux</span><span class="benefice">Les économies d’énergie de la mairie financent les mesures de pouvoir d’achat.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">8</span><span><span class="sr-only">Mesure 8 : </span><span class="titre-mesure">Rénovation énergétique des bâtiments communaux</span><span class="benefice">Les économies d’énergie de la mairie financent les mesures de pouvoir d’achat.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Tous les habitants</dd><dt>Levier de la mairie</dt><dd>Investissement communal</dd><dt>Quand</dt><dd>Tout le mandat</dd></dl></div>
             </details></li>
           </ul>
@@ -213,7 +209,7 @@
           </div>
           <ul class="mesures" role="list">
             <li><details class="pliable mesure" id="mesure-9" data-pilier="tranquillite" data-profils="parent senior jeune commercant proprietaire">
-              <summary><span class="num" aria-hidden="true">09</span><span><span class="sr-only">Mesure 9 : </span><span class="titre-mesure">Police municipale de proximité</span><span class="benefice">Des agents à pied, connus des habitants, le soir et le week-end.</span></span></summary>
+              <summary><span class="num" aria-hidden="true">9</span><span><span class="sr-only">Mesure 9 : </span><span class="titre-mesure">Police municipale de proximité</span><span class="benefice">Des agents à pied, connus des habitants, le soir et le week-end.</span></span></summary>
               <div class="contenu"><dl><dt>Pour qui</dt><dd>Tous les habitants</dd><dt>Levier de la mairie</dt><dd>Effectifs et horaires</dd><dt>Quand</dt><dd>Première année</dd></dl></div>
             </details></li>
             <li><details class="pliable mesure" id="mesure-10" data-pilier="tranquillite" data-profils="parent senior jeune commercant proprietaire">
@@ -300,7 +296,6 @@
     <section class="section" id="simulateur" aria-labelledby="titre-sim">
       <div class="conteneur">
         <div class="entete-section">
-          <p class="surtitre">Simulateur</p>
           <h2 class="titre" id="titre-sim">Ce que je gagne</h2>
           <p class="chapo">4 informations suffisent pour estimer ce que 3 mesures peuvent faire économiser à votre foyer chaque année.</p>
         </div>
@@ -359,7 +354,6 @@
     <section class="section fond-blanc" id="quartiers" aria-labelledby="titre-quartiers">
       <div class="conteneur">
         <div class="entete-section">
-          <p class="surtitre">Quartier par quartier</p>
           <h2 class="titre" id="titre-quartiers">Six quartiers, des priorités différentes</h2>
           <p class="chapo">Choisissez un quartier sur le plan pour voir qui y vit, ce qui compte pour ses habitants et les mesures prioritaires. Le même contenu est dans le tableau en dessous.</p>
         </div>
@@ -399,7 +393,6 @@
     <section class="section" id="chiffres" aria-labelledby="titre-chiffres">
       <div class="conteneur">
         <div class="entete-section">
-          <p class="surtitre">Chiffres clés</p>
           <h2 class="titre" id="titre-chiffres">Pourquoi le pouvoir d’achat d’abord</h2>
           <p class="chapo">Des chiffres nationaux récents, avec leur source : chacun peut les vérifier.</p>
         </div>
@@ -416,7 +409,6 @@
     <section class="section fond-sombre" id="methode" aria-labelledby="titre-methode">
       <div class="conteneur">
         <div class="entete-section">
-          <p class="surtitre">La méthode</p>
           <h2 class="titre" id="titre-methode">Une mairie qui rend des comptes</h2>
           <p class="chapo">Promettre ne suffit pas. Chaque année, vous pourrez vérifier où en est chaque engagement.</p>
         </div>
@@ -447,11 +439,37 @@
   </main>
 
   <footer class="pied">
-    <div class="conteneur">
-      <div class="pied-haut">
+    <img class="pied-photo" src="images/hero.jpg" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+    <div class="pied-champ">
+      <a class="marque" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#4169E1"/><path d="M14 50V30a18 18 0 0 1 36 0v20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="40" r="5" fill="#fff"/></svg><span translate="no">Camille Ferrand</span></a>
+      <nav class="pied-menu" aria-label="Pages principales">
+        <ul>
+          <li><a href="programme.html">Le programme</a></li>
+          <li><a href="engagement.html">Je m’engage</a></li>
+          <li><a href="je-vote.html">Je vote</a></li>
+          <li><a href="question.html">Une question ?</a></li>
+          <li><a href="presse.html">Espace presse</a></li>
+          <li><a href="facile-a-lire.html">Facile à lire</a></li>
+        </ul>
+      </nav>
+      <div class="pied-blocs">
+        <nav aria-labelledby="pied-infos">
+          <h2 id="pied-infos">Informations</h2>
+          <ul>
+            <li><a href="accessibilite.html">Accessibilité</a></li>
+            <li><a href="plan-du-site.html">Plan du site</a></li>
+            <li><a href="mentions-legales.html">Mentions légales</a></li>
+            <li><a href="donnees.html">Données personnelles</a></li>
+            <li><a href="experience.html">Version animée</a></li>
+          </ul>
+        </nav>
         <div>
-          <a class="marque" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#4169E1"/><path d="M14 50V30a18 18 0 0 1 36 0v20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="40" r="5" fill="#fff"/></svg><span translate="no">Camille Ferrand</span></a>
-          <p class="slogan">Vallenoire, le quotidien d’une ville qui nous facilite la vie !</p>
+          <h2>Nous suivre</h2>
+          <ul>
+            <li><a data-config="emailEquipe" href="question.html">Écrire à l’équipe</a></li>
+            <li><a data-reseau="facebook" href="#" hidden target="_blank" rel="noopener">Facebook<span class="sr-only"> (nouvel onglet)</span></a><span data-bientot class="discret">Facebook et Instagram : bientôt</span></li>
+            <li><a data-reseau="instagram" href="#" hidden target="_blank" rel="noopener">Instagram<span class="sr-only"> (nouvel onglet)</span></a></li>
+          </ul>
           <div class="partage" data-partage>
               <span>Partager</span>
               <a data-partage-facebook href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21h3z"/></svg>Facebook<span class="sr-only"> (nouvel onglet)</span></a>
@@ -460,48 +478,12 @@
               <p class="sr-only" data-copie-etat role="status"></p>
             </div>
         </div>
-        <nav aria-labelledby="pied-programme">
-          <h2 id="pied-programme">Le projet</h2>
-          <ul>
-            <li><a href="programme.html">Le programme</a></li>
-            <li><a href="facile-a-lire.html">Le programme en facile à lire</a></li>
-            <li><a href="programme.html#simulateur">Ce que je gagne</a></li>
-            <li><a href="programme.html#quartiers">Quartier par quartier</a></li>
-          </ul>
-        </nav>
-        <nav aria-labelledby="pied-agir">
-          <h2 id="pied-agir">Agir</h2>
-          <ul>
-            <li><a href="engagement.html">Je m’engage</a></li>
-            <li><a href="engagement.html#agenda">Les prochains rendez-vous</a></li>
-            <li><a href="je-vote.html">Je vote</a></li>
-            <li><a href="question.html">Poser une question</a></li>
-          </ul>
-        </nav>
-        <nav aria-labelledby="pied-infos">
-          <h2 id="pied-infos">Informations</h2>
-          <ul>
-            <li><a href="presse.html">Espace presse</a></li>
-            <li><a href="accessibilite.html">Accessibilité</a></li>
-            <li><a href="plan-du-site.html">Plan du site</a></li>
-            <li><a href="mentions-legales.html">Mentions légales</a></li>
-            <li><a href="donnees.html">Données personnelles</a></li>
-            <li><a href="experience.html">Version animée</a></li>
-            <li><a data-config="emailEquipe" href="question.html">Écrire à l’équipe</a></li>
-            <li><a data-reseau="facebook" href="#" hidden target="_blank" rel="noopener">Facebook<span class="sr-only"> (nouvel onglet)</span></a><span data-bientot class="discret">Facebook et Instagram : bientôt</span></li>
-            <li><a data-reseau="instagram" href="#" hidden target="_blank" rel="noopener">Instagram<span class="sr-only"> (nouvel onglet)</span></a></li>
-          </ul>
-        </nav>
       </div>
-      <div class="pied-bas">
-        <p>© 2026 · Vallenoire, vallée de la Garonne</p>
-        <p><strong>Projet étudiant · candidate et ville fictives</strong></p>
-      </div>
+      <p class="pied-legal">Vallenoire, le quotidien d’une ville qui nous facilite la vie ! · © 2026 · <strong>Projet étudiant · candidate et ville fictives</strong> · Photographies : équipe de campagne et Unsplash</p>
     </div>
-    <a class="btn btn-bleu cta-flottant" href="engagement.html">Je m’engage <span class="fleche" aria-hidden="true">→</span></a>
   </footer>
 
-  <script src="config.js?v=2848ad78a9"></script>
-  <script src="campagne.js?v=9c9792a9e3" defer></script>
+  <script src="config.js?v=0216c20d44"></script>
+  <script src="campagne.js?v=d3060b6c86" defer></script>
 </body>
 </html>

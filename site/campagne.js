@@ -41,13 +41,8 @@
     lisible: { cle: 'cf-lisible', classe: 'lisible' },
     animation: { cle: 'cf-sans-animation', classe: 'sans-animation' }
   };
-  const chargerPoliceLisible = () => {
-    if ($('#police-lisible')) return;
-    const l = document.createElement('link');
-    l.id = 'police-lisible'; l.rel = 'stylesheet';
-    l.href = 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700;800&display=swap';
-    document.head.appendChild(l);
-  };
+  /* La police très lisible est hébergée sur le site (fonts/) : déclarée en CSS, chargée seulement si elle sert */
+  const chargerPoliceLisible = () => {};
   const appliquerPrefs = () => {
     const t = memoire.lire(PREFS.texte.cle) || 'normal';
     Object.values(PREFS.texte.valeurs).filter(Boolean).forEach((c) => racine.classList.remove(c));
@@ -185,6 +180,8 @@
 
   /* Blocs qui apparaissent au défilement, en cascade dans une même liste */
   const CIBLES = ['.entete-section', '.grille-3 > li', '.carte', '.pilier-carte', '.etape', '.devise > li', '.engagements > li',
+    '.rangs-tete > *', '.rang .axe', '.rang-photo', '.moments-tete > h2', '.moment', '.vitrine-carte', '.portrait .titre', '.portrait-lead',
+    '.portrait-photo', '.portrait-tuile', '.faits > div', '.chiffres-appui > p', '.pratique .titre', '.pratique-grille > div', '.appel-texte > *',
     '.chiffres > li', '.falc > li', '.kit > li', '.faq > details', '.citation > img', '.citation > figure', '.encadre',
     '.mesures > li', '.etapes-methode > li', '.appel > *', '.fiche-quartier', '.plan-quartiers', '.pilier-entete'].join(',');
   const reveler = (liste) => {
@@ -270,8 +267,12 @@
   const flottant = $('.cta-flottant');
   if (flottant) {
     let masque = false;
-    const cible = $('[data-masque-cta]');
-    if (cible && 'IntersectionObserver' in window) new IntersectionObserver((es) => { masque = es.some((e) => e.isIntersecting); maj(); }).observe(cible);
+    const cibles = $$('[data-masque-cta], .pied');
+    const visibles = new Set();
+    if (cibles.length && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => { es.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target))); masque = visibles.size > 0; maj(); });
+      cibles.forEach((c) => io.observe(c));
+    }
     function maj() { flottant.classList.toggle('visible', window.scrollY > 500 && !masque); }
     addEventListener('scroll', maj, { passive: true }); maj();
   }
@@ -651,8 +652,63 @@
       const aVenir = d > aujourdhui();
       const action = c.fichier ? `<a class="btn btn-contour btn-petit" href="${esc(c.fichier)}" download>Télécharger le communiqué</a>`
         : `<p class="discret">${aVenir ? 'Disponible à cette date.' : 'Disponible sur demande auprès du contact presse.'}</p>`;
-      return `<li class="carte"><p class="surtitre"><time datetime="${esc(c.date)}">${aVenir ? 'À paraître le ' : ''}${esc(fmtDate(d, { day: 'numeric', month: 'long', year: 'numeric' }))}</time></p>
+      return `<li class="carte"><p class="date-com"><time datetime="${esc(c.date)}">${aVenir ? 'À paraître le ' : ''}${esc(fmtDate(d, { day: 'numeric', month: 'long', year: 'numeric' }))}</time></p>
         <h3>${esc(c.titre)}</h3><p>${esc(c.resume)}</p>${action}</li>`;
     }).join('');
+  }
+
+  /* ═══════════ EN-TÊTE : ombre seulement quand la page défile ═══════════ */
+  const entete = $('.entete');
+  if (entete) {
+    const majEntete = () => entete.classList.toggle('flotte', window.scrollY > 8);
+    addEventListener('scroll', majEntete, { passive: true }); majEntete();
+  }
+
+  /* ═══════════ ACCUEIL : DANS VOTRE QUARTIER ═══════════ */
+  const choixQ = $('[data-choix-quartier]');
+  if (choixQ) {
+    const panneauxQ = $$('.q-panneau');
+    const montrerQ = (id) => panneauxQ.forEach((p) => p.classList.toggle('actif', p.dataset.q === id));
+    let memoQ = null;
+    try { memoQ = localStorage.getItem('cf-quartier'); } catch (e) { memoQ = null; }
+    if (memoQ && panneauxQ.some((p) => p.dataset.q === memoQ)) choixQ.value = memoQ;
+    montrerQ(choixQ.value);
+    choixQ.addEventListener('change', () => { montrerQ(choixQ.value); try { localStorage.setItem('cf-quartier', choixQ.value); } catch (e) {} });
+  }
+
+  /* ═══════════ ACCUEIL : LE MANDAT, MOMENT PAR MOMENT ═══════════ */
+  const rangee = $('.moments-rangee');
+  if (rangee) {
+    const boutons = $('[data-moments-boutons]');
+    const prec = $('[data-moments-prec]');
+    const suiv = $('[data-moments-suiv]');
+    const progres = $('[data-moments-progres]');
+    if (boutons) boutons.hidden = false;
+    const pas = () => { const m = $('.moment', rangee); return m ? m.getBoundingClientRect().width + 32 : 320; };
+    const majProgres = () => {
+      const max = rangee.scrollWidth - rangee.clientWidth;
+      const part = max > 0 ? rangee.scrollLeft / max : 1;
+      const visible = rangee.scrollWidth ? rangee.clientWidth / rangee.scrollWidth : 1;
+      if (progres) progres.style.transform = `scaleX(${Math.min(1, visible + part * (1 - visible)).toFixed(3)})`;
+      if (prec) prec.disabled = rangee.scrollLeft < 4;
+      if (suiv) suiv.disabled = rangee.scrollLeft > max - 4;
+    };
+    if (prec) prec.addEventListener('click', () => rangee.scrollBy({ left: -pas(), behavior: mouvementReduit() ? 'auto' : 'smooth' }));
+    if (suiv) suiv.addEventListener('click', () => rangee.scrollBy({ left: pas(), behavior: mouvementReduit() ? 'auto' : 'smooth' }));
+    rangee.addEventListener('scroll', majProgres, { passive: true });
+    addEventListener('resize', majProgres);
+    majProgres();
+  }
+
+  /* ═══════════ ACCUEIL : TEXTE QUI DÉFILE (critère WCAG 2.2.2 : il peut être mis en pause) ═══════════ */
+  const bande = $('[data-defile]');
+  const pause = $('[data-defile-pause]');
+  if (bande && pause) {
+    pause.addEventListener('click', () => {
+      const enPause = !bande.classList.contains('en-pause');
+      bande.classList.toggle('en-pause', enPause);
+      pause.setAttribute('aria-pressed', String(enPause));
+      pause.textContent = enPause ? 'Relancer le texte qui défile' : 'Mettre en pause le texte qui défile';
+    });
   }
 })();

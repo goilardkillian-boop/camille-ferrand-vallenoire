@@ -83,7 +83,7 @@ window.CAMPAGNE = {
   presse: {
     communiques: [
       { date: '2026-09-15', titre: 'Camille Ferrand annonce sa candidature à Vallenoire', resume: 'Une liste citoyenne et rassembleuse, au-delà des étiquettes, pour une ville qui facilite le quotidien.', fichier: '' },
-      { date: '2026-11-14', titre: 'Présentation du programme : 24 mesures datées et chiffrées', resume: 'Pouvoir d’achat, tranquillité, mobilité du quotidien, environnement et méthode : le détail des engagements.', fichier: '' }
+      { date: '2026-11-14', titre: '24 mesures datées et chiffrées', resume: 'Pouvoir d’achat, tranquillité, mobilité du quotidien, environnement et méthode : le détail des engagements.', fichier: '' }
     ]
   }
 };
