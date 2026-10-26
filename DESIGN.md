@@ -17,12 +17,12 @@ colors:
   bordure: "#6B7280"       # bords des vrais champs de formulaire
 
 typography:
-  famille: "Archivo, hébergée sur le site (fonts/, licence OFL), variable : largeur 62 à 125 %, graisse 300 à 800"
+  famille: "Archivo, hébergée sur le site (fonts/, licence OFL), variable : largeur 62 à 125 %, toutes les graisses de 100 à 900, romain et italique"
   famille-lisible: "Atkinson Hyperlegible Next, hébergée sur le site (option « police très lisible »)"
-  nom-du-heros: "800, largeur 62 %, capitales, s'adapte pour occuper toute la largeur"
-  affiche: "800, largeur 75 %, clamp(2.5rem, 5vw, 4.5rem), interligne 1"
+  nom-du-heros: "900, largeur 62 %, capitales, s'adapte pour occuper toute la largeur"
+  affiche: "850, largeur 72 %, clamp(2.5rem, 5vw, 4.5rem), interligne 1"
   titre: "800, clamp(1.5rem, 2.6vw, 2.25rem)"
-  chapo: "1.375rem, interligne 1.5"
+  chapo: "350, 1.375rem, interligne 1.5"
   texte: "1.125rem (18 px), interligne 1.6"
   petit: "1rem minimum, jamais en dessous"
 
@@ -60,7 +60,7 @@ Construit avec les skills de design Taste Skill (direction « The place carries 
 
 ## Typographie
 
-- **Archivo** partout, hébergée sur le site (plus d'appel à Google Fonts).
+- **Archivo** partout, hébergée sur le site (plus d'appel à Google Fonts), avec toute sa gamme de graisses : 900 pour le nom et les grands chiffres, 850 pour les affiches, 750 pour les petits titres, 550 pour le menu, 450 à 500 pour les phrases d'accroche et la citation (en italique), 300 à 350 pour les chapôs. Le texte courant reste à 400.
 - **Cinq tailles** de texte, plus le nom du héros : affiche, titre, chapo, texte, petit. Pas de taille intermédiaire.
 - **Pas de surtitre**, de petit libellé au-dessus d'un titre, de capitales espacées en petit corps, de numérotation 01 / 02 / 03, de police à chasse fixe.
 - Titres de deux lignes au plus, à toutes les largeurs.
@@ -69,7 +69,8 @@ Construit avec les skills de design Taste Skill (direction « The place carries 
 ## Mise en page
 
 - Une paire de marges égales à toutes les largeurs ; les grands éléments (photos, champs de couleur) vont bord à bord.
-- Chaque section a sa propre composition : rangées sur un axe au tiers avec photos en marge, rangée qui défile à l'horizontale, vue plein cadre avec carte d'encre, mosaïque photo et tuile de couleur, chiffre posé sur le bord d'une photo, information pratique en deux colonnes, trois photos puis un champ bleu.
+- Pas de grand vide autour des photos : chaque photo occupe sa colonne en entier, et le texte se pose en face, à hauteur égale.
+- Chaque section a sa propre composition : rangées en quinconce (grande photo, texte en face, côté alterné), rangée qui défile à l'horizontale, vue plein cadre avec carte d'encre, mosaïque photo et tuile de couleur, chiffre posé sur le bord d'une photo, information pratique en deux colonnes, trois photos puis un champ bleu.
 - Le pied de page est une fermeture dessinée : une photo des arcades d'un côté, le menu en grand de l'autre.
 
 ## Composants

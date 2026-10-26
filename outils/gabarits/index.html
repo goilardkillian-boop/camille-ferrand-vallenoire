@@ -9,14 +9,16 @@
 
     <section class="section rangs" aria-labelledby="titre-changements">
       <div class="conteneur">
-        <div class="rangs-tete axe">
+        <div class="rangs-tete">
           <h2 class="titre" id="titre-changements">Trois changements concrets</h2>
-          <p class="chapo">Et une mairie qui rend des comptes. Chaque mesure dit qui en profite, avec quel levier et pour quand.</p>
-          {{ECOUTER}}
+          <div class="rangs-intro">
+            <p class="chapo">Et une mairie qui rend des comptes. Chaque mesure dit qui en profite, avec quel levier et pour quand.</p>
+            {{ECOUTER}}
+          </div>
         </div>
         <ul class="rangs-liste" role="list">
           <li class="rang">
-            <div class="axe">
+            <div class="rang-texte">
               <h3>Moins de dépenses</h3>
               <p>Le taux communal de taxe foncière gelé, la cantine au quotient familial et un achat groupé d’énergie ouvert à tous. Les prix de l’énergie ont pris 16,7 % en un an (<a href="https://www.insee.fr/fr/statistiques/9051406" target="_blank" rel="noopener">Insee, août 2026<span class="sr-only"> (nouvel onglet)</span></a>).</p>
               <a class="lien-fort" href="programme.html#pilier-pouvoir-achat">Le pouvoir d’achat en 8 mesures</a>
@@ -24,7 +26,7 @@
             <img class="rang-photo r1" src="images/cantine.jpg" alt="Un plateau de cantine équilibré posé sur une table en bois" width="1536" height="1024" loading="lazy" decoding="async">
           </li>
           <li class="rang">
-            <div class="axe">
+            <div class="rang-texte">
               <h3>Plus de tranquillité</h3>
               <p>Des agents à pied le soir et le week-end, des médiateurs de rue, un référent par quartier et un éclairage refait dans les rues sombres.</p>
               <a class="lien-fort" href="programme.html#pilier-tranquillite">La tranquillité en 6 mesures</a>
@@ -32,7 +34,7 @@
             <img class="rang-photo r2" src="images/quais.jpg" alt="Les quais éclairés en soirée, le long de la rivière" width="1350" height="900" loading="lazy" decoding="async">
           </li>
           <li class="rang">
-            <div class="axe">
+            <div class="rang-texte">
               <h3>Des trajets plus simples</h3>
               <p>Des rues fermées aux voitures devant les écoles, des pistes cyclables continues et un transport à la demande pour les aînés, hameaux compris.</p>
               <a class="lien-fort" href="programme.html#pilier-mobilite">La mobilité en 7 mesures</a>
@@ -40,7 +42,7 @@
             <img class="rang-photo r3" src="images/ecole.jpg" alt="Des enfants et leurs parents marchent vers l’école dans une rue fermée aux voitures" width="1200" height="800" loading="lazy" decoding="async">
           </li>
           <li class="rang">
-            <div class="axe">
+            <div class="rang-texte">
               <h3>Des comptes rendus à tous</h3>
               <p>Le budget publié chaque année en une page, un bilan public à mi-mandat et une permanence par mois dans chacun des six quartiers.</p>
               <a class="lien-fort" href="programme.html#pilier-environnement">La méthode en 3 mesures</a>
@@ -48,7 +50,7 @@
             <img class="rang-photo r4" src="images/reunion.jpg" alt="Une salle communale préparée pour une réunion de quartier" width="1350" height="900" loading="lazy" decoding="async">
           </li>
         </ul>
-        <p class="axe rangs-falc">Besoin de phrases plus simples ? <a href="facile-a-lire.html">Lire le programme en facile à lire et à comprendre</a>.</p>
+        <p class="rangs-falc">Besoin de phrases plus simples ? <a href="facile-a-lire.html">Lire le programme en facile à lire et à comprendre</a>.</p>
       </div>
     </section>
 
@@ -80,17 +82,15 @@
     </section>
 
     <section class="section portrait" aria-labelledby="titre-camille">
-      <div class="conteneur">
-        <h2 class="titre" id="titre-camille">Qui est Camille Ferrand</h2>
-        <p class="chapo portrait-lead">47 ans, géomètre de formation. Depuis 2014, elle organise le transport scolaire et à la demande de l’agglomération : 40 lignes, 1 800 élèves chaque matin. Elle vit aux Quais depuis 2009. C’est sa première candidature. <a href="presse.html#bio">Lire sa biographie</a></p>
-        <div class="portrait-grille">
-          <figure class="portrait-photo">
-            <img src="images/camille-ferrand.jpg" alt="Portrait de Camille Ferrand, souriante, en chemise bleu clair" width="750" height="1124" loading="lazy" decoding="async">
-            <blockquote class="portrait-citation">
-              <p>Chaque euro compte dans une famille. La mairie doit alléger ce qui dépend d’elle : la cantine, la taxe foncière.</p>
-            </blockquote>
-          </figure>
-          <div class="portrait-cote">
+      <div class="conteneur portrait-grille">
+        <img class="portrait-photo" src="images/camille-ferrand.jpg" alt="Portrait de Camille Ferrand, souriante, en chemise bleu clair" width="750" height="1124" loading="lazy" decoding="async">
+        <div class="portrait-texte">
+          <h2 class="titre" id="titre-camille">Qui est Camille Ferrand</h2>
+          <p class="chapo">47 ans, géomètre de formation. Depuis 2014, elle organise le transport scolaire et à la demande de l’agglomération : 40 lignes, 1 800 élèves chaque matin. Elle vit aux Quais depuis 2009. C’est sa première candidature.</p>
+          <blockquote class="portrait-citation">
+            <p>Chaque euro compte dans une famille. La mairie doit alléger ce qui dépend d’elle : la cantine, la taxe foncière.</p>
+          </blockquote>
+          <div class="portrait-bas">
             <div class="portrait-tuile">
               <svg viewBox="0 0 600 450" role="img" aria-labelledby="carte-titre">
                 <title id="carte-titre">Plan schématique des six quartiers de Vallenoire, la Garonne au sud ; Les Quais, où vit Camille Ferrand, sont mis en évidence</title>
@@ -104,12 +104,15 @@
                 <path class="fleuve" d="M0 420 Q100 404 200 420 T400 420 T600 416"/>
               </svg>
             </div>
-            <dl class="faits">
-              <div><dt>Âge</dt><dd>47 ans</dd></div>
-              <div><dt>Métier</dt><dd>Géomètre</dd></div>
-              <div><dt>Quartier</dt><dd>Les Quais</dd></div>
-              <div><dt>Engagement</dt><dd>Club d’aviron</dd></div>
-            </dl>
+            <div class="portrait-faits">
+              <dl class="faits">
+                <div><dt>Âge</dt><dd>47 ans</dd></div>
+                <div><dt>Métier</dt><dd>Géomètre</dd></div>
+                <div><dt>Quartier</dt><dd>Les Quais</dd></div>
+                <div><dt>Engagement</dt><dd>Club d’aviron</dd></div>
+              </dl>
+              <a class="lien-fort" href="presse.html#bio">Lire sa biographie</a>
+            </div>
           </div>
         </div>
       </div>
@@ -151,6 +154,7 @@
             <p class="pratique-date" data-date-scrutin>Date à confirmer</p>
             <p>Pour voter, il faut être inscrit sur les listes avant le <strong data-limite-inscription>6e vendredi avant le scrutin</strong>. Absent ce jour-là ? Une procuration se fait en ligne en quelques minutes.</p>
             <a class="lien-fort" href="je-vote.html">Préparer mon vote</a>
+            <img class="pratique-photo" src="images/ecole.jpg" alt="Une rue devant une école, fermée aux voitures : les bureaux de vote sont souvent dans les écoles" width="1200" height="800" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
