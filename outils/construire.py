@@ -113,9 +113,7 @@ def tete(fichier, titre_court, titre, description, profondeur_ariane):
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Camille Ferrand, sur fond bleu, avec le slogan : Vallenoire, le quotidien d’une ville qui nous facilite la vie">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&amp;display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     /* Préférences d'affichage appliquées avant l'affichage (voir campagne.js) */
     (function (r) {{
@@ -228,54 +226,44 @@ PARTAGE = f'''<div class="partage" data-partage>
 
 
 def pied(fichier):
-    flottant = '' if fichier in ('engagement.html', '404.html') else \
-        '\n    <a class="btn btn-bleu cta-flottant" href="engagement.html">Je m’engage <span class="fleche" aria-hidden="true">→</span></a>'
+    flottant = ''
     return f'''
   <footer class="pied">
-    <div class="conteneur">
-      <div class="pied-haut">
-        <div>
-          <a class="marque" href="index.html">{LOGO}<span translate="no">Camille Ferrand</span></a>
-          <p class="slogan">Vallenoire, le quotidien d’une ville qui nous facilite la vie !</p>
-          {PARTAGE}
-        </div>
-        <nav aria-labelledby="pied-programme">
-          <h2 id="pied-programme">Le projet</h2>
-          <ul>
-            <li><a href="programme.html">Le programme</a></li>
-            <li><a href="facile-a-lire.html">Le programme en facile à lire</a></li>
-            <li><a href="programme.html#simulateur">Ce que je gagne</a></li>
-            <li><a href="programme.html#quartiers">Quartier par quartier</a></li>
-          </ul>
-        </nav>
-        <nav aria-labelledby="pied-agir">
-          <h2 id="pied-agir">Agir</h2>
-          <ul>
-            <li><a href="engagement.html">Je m’engage</a></li>
-            <li><a href="engagement.html#agenda">Les prochains rendez-vous</a></li>
-            <li><a href="je-vote.html">Je vote</a></li>
-            <li><a href="question.html">Poser une question</a></li>
-          </ul>
-        </nav>
+    <img class="pied-photo" src="images/hero.jpg" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+    <div class="pied-champ">
+      <a class="marque" href="index.html">{LOGO}<span translate="no">Camille Ferrand</span></a>
+      <nav class="pied-menu" aria-label="Pages principales">
+        <ul>
+          <li><a href="programme.html">Le programme</a></li>
+          <li><a href="engagement.html">Je m’engage</a></li>
+          <li><a href="je-vote.html">Je vote</a></li>
+          <li><a href="question.html">Une question ?</a></li>
+          <li><a href="presse.html">Espace presse</a></li>
+          <li><a href="facile-a-lire.html">Facile à lire</a></li>
+        </ul>
+      </nav>
+      <div class="pied-blocs">
         <nav aria-labelledby="pied-infos">
           <h2 id="pied-infos">Informations</h2>
           <ul>
-            <li><a href="presse.html">Espace presse</a></li>
             <li><a href="accessibilite.html">Accessibilité</a></li>
             <li><a href="plan-du-site.html">Plan du site</a></li>
             <li><a href="mentions-legales.html">Mentions légales</a></li>
             <li><a href="donnees.html">Données personnelles</a></li>
             <li><a href="experience.html">Version animée</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Nous suivre</h2>
+          <ul>
             <li><a data-config="emailEquipe" href="question.html">Écrire à l’équipe</a></li>
             <li><a data-reseau="facebook" href="#" hidden target="_blank" rel="noopener">Facebook{NOUVEL_ONGLET}</a><span data-bientot class="discret">Facebook et Instagram : bientôt</span></li>
             <li><a data-reseau="instagram" href="#" hidden target="_blank" rel="noopener">Instagram{NOUVEL_ONGLET}</a></li>
           </ul>
-        </nav>
+          {PARTAGE}
+        </div>
       </div>
-      <div class="pied-bas">
-        <p>© 2026 · Vallenoire, vallée de la Garonne</p>
-        <p><strong>Projet étudiant · candidate et ville fictives</strong></p>
-      </div>
+      <p class="pied-legal">Vallenoire, le quotidien d’une ville qui nous facilite la vie ! · © 2026 · <strong>Projet étudiant · candidate et ville fictives</strong> · Photographies : équipe de campagne et Unsplash</p>
     </div>{flottant}
   </footer>
 
@@ -315,7 +303,7 @@ def versionner(page):
 def main():
     for fichier, court, titre, description, parent in PAGES:
         corps = (GABARITS / fichier).read_text(encoding='utf-8')
-        corps = corps.replace('{{ECOUTER}}', ECOUTER).replace('{{PARTAGE}}', PARTAGE).replace('{{MESURES}}', mesures.html())
+        corps = corps.replace('{{ECOUTER}}', ECOUTER).replace('{{PARTAGE}}', PARTAGE).replace('{{MESURES}}', mesures.html()).replace('{{QUARTIERS}}', mesures.quartiers_html()).replace('{{MOMENTS}}', mesures.moments_html())
         page = (tete(fichier, court, titre, description, parent) + entete(fichier)
                 + '\n  <main id="contenu" tabindex="-1">\n' + ariane(fichier, court, parent)
                 + corps + '  </main>\n' + pied(fichier))

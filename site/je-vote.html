@@ -23,9 +23,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Camille Ferrand, sur fond bleu, avec le slogan : Vallenoire, le quotidien d’une ville qui nous facilite la vie">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&amp;display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     /* Préférences d'affichage appliquées avant l'affichage (voir campagne.js) */
     (function (r) {
@@ -39,7 +37,7 @@
       } catch (e) {}
     })(document.documentElement);
   </script>
-  <link rel="stylesheet" href="campagne.css?v=c893ca74b6">
+  <link rel="stylesheet" href="campagne.css?v=c600cd6dd1">
   <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Camille Ferrand · Vallenoire", "url": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/", "inLanguage": "fr-FR", "description": "Site de campagne municipale fictif, réalisé dans le cadre d’un projet étudiant."}, {"@context": "https://schema.org", "@type": "Person", "name": "Camille Ferrand", "description": "Candidate fictive aux élections municipales de Vallenoire (ville fictive), projet étudiant.", "image": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/images/camille-ferrand.jpg", "url": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/"}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/"}, {"@type": "ListItem", "position": 2, "name": "Je vote", "item": "https://goilardkillian-boop.github.io/camille-ferrand-vallenoire/je-vote.html"}]}]</script>
 </head>
 <body class="page">
@@ -102,11 +100,11 @@
 
   <main id="contenu" tabindex="-1">
 <nav class="ariane conteneur" aria-label="Fil d’Ariane"><ol><li><a href="index.html">Accueil</a></li><li><span aria-current="page">Je vote</span></li></ol></nav>
-    <section class="heros-seul" aria-labelledby="titre-page">
-      <div class="conteneur texte-heros">
-        <p class="surtitre">Je vote</p>
-        <h1 class="affiche" id="titre-page">Le <span data-date-scrutin>dimanche 13 décembre 2026</span>, chaque voix compte.</h1>
-        <p class="chapo">Trois vérifications à faire dès maintenant, puis tout ce qu’il faut savoir pour le jour du vote. Cette page ne donne aucune consigne de vote : elle vous aide à voter, quel que soit votre choix.</p>
+    <section class="heros" aria-labelledby="titre-page">
+      <div class="conteneur heros-grille">
+        <div class="texte-heros">
+        <h1 class="affiche" id="titre-page">Le jour du vote, chaque voix compte.</h1>
+        <p class="chapo">Rendez-vous le <strong data-date-scrutin>dimanche 13 décembre 2026</strong>. Trois vérifications à faire dès maintenant, puis tout ce qu’il faut savoir pour le jour du vote. Cette page ne donne aucune consigne de vote : elle vous aide à voter, quel que soit votre choix.</p>
         <p class="fictif">Date du scrutin : hypothèse de travail du projet étudiant</p>
         <div class="ecouter" data-lecture data-pas-lire>
             <button class="btn-outil" type="button" data-lire><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Écouter cette page</span></button>
@@ -114,13 +112,17 @@
             <button class="btn-outil" type="button" data-stop hidden>Arrêter</button>
             <p data-lecture-etat role="status"></p>
           </div>
+        </div>
+        <figure class="heros-visuel paysage">
+          <img src="images/ecole.jpg" alt="Une rue devant une école, fermée aux voitures" width="1200" height="800" fetchpriority="high" decoding="async">
+          <figcaption>Les bureaux de vote sont souvent installés dans les écoles.</figcaption>
+        </figure>
       </div>
     </section>
 
     <section class="section fond-blanc" aria-labelledby="titre-etapes">
       <div class="conteneur">
         <div class="entete-section">
-          <p class="surtitre">Avant le vote</p>
           <h2 class="titre" id="titre-etapes">3 vérifications à faire maintenant</h2>
         </div>
         <ol class="etapes" role="list">
@@ -148,8 +150,8 @@
     <section class="section" aria-labelledby="titre-jour">
       <div class="conteneur grille-2" style="align-items:start">
         <div class="pile">
-          <p class="surtitre">Le jour du vote</p>
           <h2 class="titre" id="titre-jour">À emporter et à savoir</h2>
+          <img class="photo-pile" src="images/detail-1.jpg" alt="Des arcades en pierre au soleil" width="480" height="720" loading="lazy" decoding="async">
         </div>
         <div class="texte">
           <ul class="hypotheses">
@@ -168,9 +170,9 @@
     <section class="section fond-blanc" aria-labelledby="titre-faq-vote">
       <div class="conteneur">
         <div class="entete-section">
-          <p class="surtitre">Questions fréquentes</p>
           <h2 class="titre" id="titre-faq-vote">Vos questions sur le vote</h2>
         </div>
+        <div class="faq-photo">
         <div class="faq">
           <details class="pliable">
             <summary>Je viens d’emménager à Vallenoire. Puis-je voter ici ?</summary>
@@ -189,6 +191,8 @@
             <div class="contenu"><p>Toute personne de confiance inscrite sur les listes électorales, même dans une autre commune. Elle devra venir voter dans votre bureau de vote, à Vallenoire.</p></div>
           </details>
         </div>
+        <img src="images/detail-4.jpg" alt="Un lampadaire ancien dans une rue" width="480" height="720" loading="lazy" decoding="async">
+        </div>
       </div>
     </section>
 
@@ -204,11 +208,37 @@
   </main>
 
   <footer class="pied">
-    <div class="conteneur">
-      <div class="pied-haut">
+    <img class="pied-photo" src="images/hero.jpg" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+    <div class="pied-champ">
+      <a class="marque" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#4169E1"/><path d="M14 50V30a18 18 0 0 1 36 0v20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="40" r="5" fill="#fff"/></svg><span translate="no">Camille Ferrand</span></a>
+      <nav class="pied-menu" aria-label="Pages principales">
+        <ul>
+          <li><a href="programme.html">Le programme</a></li>
+          <li><a href="engagement.html">Je m’engage</a></li>
+          <li><a href="je-vote.html">Je vote</a></li>
+          <li><a href="question.html">Une question ?</a></li>
+          <li><a href="presse.html">Espace presse</a></li>
+          <li><a href="facile-a-lire.html">Facile à lire</a></li>
+        </ul>
+      </nav>
+      <div class="pied-blocs">
+        <nav aria-labelledby="pied-infos">
+          <h2 id="pied-infos">Informations</h2>
+          <ul>
+            <li><a href="accessibilite.html">Accessibilité</a></li>
+            <li><a href="plan-du-site.html">Plan du site</a></li>
+            <li><a href="mentions-legales.html">Mentions légales</a></li>
+            <li><a href="donnees.html">Données personnelles</a></li>
+            <li><a href="experience.html">Version animée</a></li>
+          </ul>
+        </nav>
         <div>
-          <a class="marque" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#4169E1"/><path d="M14 50V30a18 18 0 0 1 36 0v20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="40" r="5" fill="#fff"/></svg><span translate="no">Camille Ferrand</span></a>
-          <p class="slogan">Vallenoire, le quotidien d’une ville qui nous facilite la vie !</p>
+          <h2>Nous suivre</h2>
+          <ul>
+            <li><a data-config="emailEquipe" href="question.html">Écrire à l’équipe</a></li>
+            <li><a data-reseau="facebook" href="#" hidden target="_blank" rel="noopener">Facebook<span class="sr-only"> (nouvel onglet)</span></a><span data-bientot class="discret">Facebook et Instagram : bientôt</span></li>
+            <li><a data-reseau="instagram" href="#" hidden target="_blank" rel="noopener">Instagram<span class="sr-only"> (nouvel onglet)</span></a></li>
+          </ul>
           <div class="partage" data-partage>
               <span>Partager</span>
               <a data-partage-facebook href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21h3z"/></svg>Facebook<span class="sr-only"> (nouvel onglet)</span></a>
@@ -217,48 +247,12 @@
               <p class="sr-only" data-copie-etat role="status"></p>
             </div>
         </div>
-        <nav aria-labelledby="pied-programme">
-          <h2 id="pied-programme">Le projet</h2>
-          <ul>
-            <li><a href="programme.html">Le programme</a></li>
-            <li><a href="facile-a-lire.html">Le programme en facile à lire</a></li>
-            <li><a href="programme.html#simulateur">Ce que je gagne</a></li>
-            <li><a href="programme.html#quartiers">Quartier par quartier</a></li>
-          </ul>
-        </nav>
-        <nav aria-labelledby="pied-agir">
-          <h2 id="pied-agir">Agir</h2>
-          <ul>
-            <li><a href="engagement.html">Je m’engage</a></li>
-            <li><a href="engagement.html#agenda">Les prochains rendez-vous</a></li>
-            <li><a href="je-vote.html">Je vote</a></li>
-            <li><a href="question.html">Poser une question</a></li>
-          </ul>
-        </nav>
-        <nav aria-labelledby="pied-infos">
-          <h2 id="pied-infos">Informations</h2>
-          <ul>
-            <li><a href="presse.html">Espace presse</a></li>
-            <li><a href="accessibilite.html">Accessibilité</a></li>
-            <li><a href="plan-du-site.html">Plan du site</a></li>
-            <li><a href="mentions-legales.html">Mentions légales</a></li>
-            <li><a href="donnees.html">Données personnelles</a></li>
-            <li><a href="experience.html">Version animée</a></li>
-            <li><a data-config="emailEquipe" href="question.html">Écrire à l’équipe</a></li>
-            <li><a data-reseau="facebook" href="#" hidden target="_blank" rel="noopener">Facebook<span class="sr-only"> (nouvel onglet)</span></a><span data-bientot class="discret">Facebook et Instagram : bientôt</span></li>
-            <li><a data-reseau="instagram" href="#" hidden target="_blank" rel="noopener">Instagram<span class="sr-only"> (nouvel onglet)</span></a></li>
-          </ul>
-        </nav>
       </div>
-      <div class="pied-bas">
-        <p>© 2026 · Vallenoire, vallée de la Garonne</p>
-        <p><strong>Projet étudiant · candidate et ville fictives</strong></p>
-      </div>
+      <p class="pied-legal">Vallenoire, le quotidien d’une ville qui nous facilite la vie ! · © 2026 · <strong>Projet étudiant · candidate et ville fictives</strong> · Photographies : équipe de campagne et Unsplash</p>
     </div>
-    <a class="btn btn-bleu cta-flottant" href="engagement.html">Je m’engage <span class="fleche" aria-hidden="true">→</span></a>
   </footer>
 
-  <script src="config.js?v=2848ad78a9"></script>
-  <script src="campagne.js?v=9c9792a9e3" defer></script>
+  <script src="config.js?v=0216c20d44"></script>
+  <script src="campagne.js?v=d3060b6c86" defer></script>
 </body>
 </html>
